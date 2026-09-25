@@ -295,16 +295,17 @@ body.vc-body,
   width: 2.75rem; height: 2.75rem;
   display: flex; align-items: center; justify-content: center;
   flex: 0 0 auto;
-  border-radius: 0.75rem;
+  border-radius: 9999px;
   overflow: hidden;
+  background: var(--vc-surface);
+  border: 1px solid var(--vc-line);
+  box-shadow: var(--vc-shadow-sm);
 }
 .vc-brand-mark img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
   display: block;
-  object-fit: contain;
+  object-fit: cover;
 }
 .vc-brand-name { font-size: 0.9375rem; font-weight: 600; letter-spacing: -0.01em; }
 .vc-brand-sub  { font-size: 0.6875rem; color: var(--vc-slate-400); }
@@ -417,7 +418,15 @@ body.vc-body,
 .vc-cert-rule { height: 1px; width: 10rem; background: var(--vc-slate-400); margin-top: 0.375rem; }
 .vc-cert-role { margin: 0.25rem 0 0; font-size: 0.625rem; color: var(--vc-slate-500); }
 
-.vc-seal { flex: 0 0 auto; }
+.vc-seal {
+  flex: 0 0 auto;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 9999px;
+  object-fit: cover;
+  border: 1px solid var(--vc-line);
+  background: #fff;
+}
 
 .vc-empty {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
