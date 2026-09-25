@@ -99,6 +99,101 @@ function sanitizeIssuer(issuer) {
   return safeIssuer;
 }
 
+function getOrCreateApprovedDemoIssuer() {
+  const issuers = getIssuers();
+  const approvedIssuer = issuers.find((item) => item.status === 'approved');
+  if (approvedIssuer) return approvedIssuer;
+
+  const keys = generateIssuerKeys();
+  const demoIssuer = {
+    id: randomUUID(),
+    name: 'CredShield Demo University',
+    email: 'demo-issuer@credshield.app',
+    did: 'did:credshield:demo-university',
+    status: 'approved',
+    publicKey: keys.publicKey,
+    privateKey: keys.privateKey,
+    createdAt: new Date().toISOString(),
+  };
+
+  issuers.unshift(demoIssuer);
+  saveIssuers(issuers);
+  return demoIssuer;
+}
+
+async function createCredentialRecord({
+  req,
+  issuer,
+  studentName,
+  studentEmail,
+  studentId,
+  institutionName,
+  credentialType,
+  program,
+  grade,
+  issueDate,
+  expiresAt,
+}) {
+  const credentialId = buildCredentialId();
+  const payload = canonicalPayload({
+    credentialId,
+    issuerId: issuer.id,
+    institutionName: institutionName || issuer.name,
+    studentName,
+    studentEmail,
+    studentId,
+    credentialType,
+    program,
+    grade,
+    issueDate: issueDate || new Date().toISOString().slice(0, 10),
+    expiresAt: expiresAt || null,
+  });
+
+  const hash = sha256(stableStringify(payload));
+  const signature = signHash(hash, issuer.privateKey);
+  const verifyUrl = buildVerifyUrl(req, credentialId);
+  const qrFileName = `${credentialId}.png`;
+  const pdfFileName = `${credentialId}.pdf`;
+  const qrAbsPath = path.join(generatedQrDir, qrFileName);
+  const pdfAbsPath = path.join(generatedPdfDir, pdfFileName);
+  const qrPath = `/generated/qr/${qrFileName}`;
+  const pdfPath = `/generated/certificates/${pdfFileName}`;
+
+  await QRCode.toFile(qrAbsPath, verifyUrl, { margin: 1, width: 300, color: { dark: '#0f172a', light: '#ffffff' } });
+  const qrDataUrl = await QRCode.toDataURL(verifyUrl, { margin: 1, width: 300 });
+
+  const anchor = await anchorCredential({
+    credentialId,
+    hash,
+    issuerId: issuer.id,
+    metadataURI: `local://credentials/${credentialId}`,
+    issuedAt: Date.now(),
+    expiresAt: payload.expiresAt,
+  });
+
+  const credential = {
+    id: credentialId,
+    payload,
+    hash,
+    signature,
+    status: 'active',
+    issuedAt: new Date().toISOString(),
+    anchor,
+    verifyUrl,
+    qrPath,
+    pdfPath,
+    issuerSnapshot: sanitizeIssuer(issuer),
+  };
+
+  await buildCertificatePdf({ filePath: pdfAbsPath, credential, issuer, qrDataUrl });
+
+  const credentials = getCredentials();
+  credentials.unshift(credential);
+  saveCredentials(credentials);
+
+  return credential;
+}
+
 function issueDemoDataIfEmpty() {
   const issuers = getIssuers();
   const credentials = getCredentials();
@@ -254,62 +349,19 @@ app.post('/api/credentials/issue', async (req, res) => {
     if (!issuer) return res.status(404).json({ error: 'issuer not found' });
     if (issuer.status !== 'approved') return res.status(403).json({ error: 'issuer is not approved' });
 
-    const credentialId = buildCredentialId();
-    const payload = canonicalPayload({
-      credentialId,
-      issuerId,
-      institutionName: institutionName || issuer.name,
+    const credential = await createCredentialRecord({
+      req,
+      issuer,
       studentName,
       studentEmail,
       studentId,
+      institutionName,
       credentialType,
       program,
       grade,
-      issueDate: issueDate || new Date().toISOString().slice(0, 10),
-      expiresAt: expiresAt || null,
+      issueDate,
+      expiresAt,
     });
-
-    const hash = sha256(stableStringify(payload));
-    const signature = signHash(hash, issuer.privateKey);
-    const verifyUrl = buildVerifyUrl(req, credentialId);
-    const qrFileName = `${credentialId}.png`;
-    const pdfFileName = `${credentialId}.pdf`;
-    const qrAbsPath = path.join(generatedQrDir, qrFileName);
-    const pdfAbsPath = path.join(generatedPdfDir, pdfFileName);
-    const qrPath = `/generated/qr/${qrFileName}`;
-    const pdfPath = `/generated/certificates/${pdfFileName}`;
-
-    await QRCode.toFile(qrAbsPath, verifyUrl, { margin: 1, width: 300, color: { dark: '#0f172a', light: '#ffffff' } });
-    const qrDataUrl = await QRCode.toDataURL(verifyUrl, { margin: 1, width: 300 });
-
-    const anchor = await anchorCredential({
-      credentialId,
-      hash,
-      issuerId,
-      metadataURI: `local://credentials/${credentialId}`,
-      issuedAt: Date.now(),
-      expiresAt: payload.expiresAt,
-    });
-
-    const credential = {
-      id: credentialId,
-      payload,
-      hash,
-      signature,
-      status: 'active',
-      issuedAt: new Date().toISOString(),
-      anchor,
-      verifyUrl,
-      qrPath,
-      pdfPath,
-      issuerSnapshot: sanitizeIssuer(issuer),
-    };
-
-    await buildCertificatePdf({ filePath: pdfAbsPath, credential, issuer, qrDataUrl });
-
-    const credentials = getCredentials();
-    credentials.unshift(credential);
-    saveCredentials(credentials);
 
     res.status(201).json({
       message: 'credential issued successfully',
@@ -318,6 +370,53 @@ app.post('/api/credentials/issue', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'failed to issue credential', detail: error.message });
+  }
+});
+
+app.post('/api/demo/certificate', async (req, res) => {
+  try {
+    const {
+      studentName,
+      studentEmail,
+      credentialType,
+      program,
+      grade,
+      institutionName,
+      issueDate,
+      expiresAt,
+    } = req.body || {};
+
+    if (!studentName || !credentialType || !program || !grade) {
+      return res.status(400).json({ error: 'studentName, credentialType, program and grade are required' });
+    }
+
+    const issuer = getOrCreateApprovedDemoIssuer();
+    const safeName = studentName.trim().toUpperCase().replace(/[^A-Z0-9]+/g, '').slice(0, 10) || 'DEMO';
+    const generatedEmail = studentEmail || `${safeName.toLowerCase()}@demo.credshield.app`;
+    const generatedStudentId = `DEMO-${Date.now().toString().slice(-6)}`;
+
+    const credential = await createCredentialRecord({
+      req,
+      issuer,
+      studentName,
+      studentEmail: generatedEmail,
+      studentId: generatedStudentId,
+      institutionName: institutionName || issuer.name,
+      credentialType,
+      program,
+      grade,
+      issueDate,
+      expiresAt,
+    });
+
+    res.status(201).json({
+      message: 'demo certificate generated successfully',
+      credential,
+      issuer: sanitizeIssuer(issuer),
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'failed to generate demo certificate', detail: error.message });
   }
 });
 
@@ -420,6 +519,10 @@ app.get('/issuer', (req, res) => {
 
 app.get('/verify', (req, res) => {
   res.sendFile(path.join(publicDir, 'verify.html'));
+});
+
+app.get('/demo-certificate', (req, res) => {
+  res.sendFile(path.join(publicDir, 'demo-certificate.html'));
 });
 
 app.get('*', (req, res) => {

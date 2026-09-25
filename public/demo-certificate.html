@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CredShield — Demo Certificate Generator</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="hero portal-hero demo-hero">
+      <div>
+        <p class="eyebrow">Demo Certificate Generator</p>
+        <h1>Generate a sample certificate with QR in one click-flow</h1>
+        <p class="subtitle">
+          This is a lightweight demo page for presentations. Enter a few values, generate a certificate,
+          and instantly get a printable certificate preview, QR code, PDF download, and verification link.
+        </p>
+        <div class="cta-row">
+          <a class="secondary link-button" href="/">Home</a>
+          <a class="secondary link-button" href="/issuer">Issuer portal</a>
+          <a class="primary link-button" href="/verify">Verifier portal</a>
+        </div>
+      </div>
+      <div class="hero-card compact-card">
+        <div class="hero-badge">Presentation-ready demo</div>
+        <div class="metric"><strong>QR</strong><span>generated automatically</span></div>
+        <div class="metric"><strong>PDF</strong><span>certificate download included</span></div>
+        <div class="metric"><strong>Live</strong><span>verification page linked</span></div>
+      </div>
+    </header>
+
+    <main>
+      <section class="grid two demo-layout">
+        <article class="card">
+          <h2>Generate demo certificate</h2>
+          <p class="helper">Uses the approved demo issuer automatically, so you do not need to pick an institution first.</p>
+          <form id="demoForm" class="form-grid two-columns">
+            <label>
+              Recipient name
+              <input name="studentName" placeholder="Arun Kumar" required />
+            </label>
+            <label>
+              Recipient email (optional)
+              <input name="studentEmail" type="email" placeholder="arun@example.com" />
+            </label>
+            <label>
+              Credential type
+              <input name="credentialType" placeholder="Certificate of Completion" required />
+            </label>
+            <label>
+              Program / course
+              <input name="program" placeholder="Blockchain Fundamentals" required />
+            </label>
+            <label>
+              Grade / result
+              <input name="grade" placeholder="A+" required />
+            </label>
+            <label>
+              Institution name (optional)
+              <input name="institutionName" placeholder="CredShield Demo University" />
+            </label>
+            <label>
+              Issue date
+              <input name="issueDate" type="date" />
+            </label>
+            <label>
+              Expiry date (optional)
+              <input name="expiresAt" type="date" />
+            </label>
+            <div class="form-actions full-width">
+              <button type="submit" class="primary">Generate demo certificate</button>
+            </div>
+          </form>
+          <p id="demoMessage" class="message"></p>
+        </article>
+
+        <article class="card">
+          <h2>What gets created</h2>
+          <div class="trust-stack">
+            <div>
+              <h3>1. Certificate payload</h3>
+              <p>Recipient details, credential type, program, grade, dates, and issuer reference.</p>
+            </div>
+            <div>
+              <h3>2. QR code</h3>
+              <p>Links directly to the verifier page so anyone can check authenticity instantly.</p>
+            </div>
+            <div>
+              <h3>3. Proof record</h3>
+              <p>Hash, signature, and mock-chain anchor are created for tamper-evident verification.</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section id="demoResult" class="demo-result"></section>
+    </main>
+
+    <script src="/demo-certificate.js"></script>
+  </body>
+</html>

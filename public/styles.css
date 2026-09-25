@@ -387,10 +387,116 @@ input:focus, select:focus, textarea:focus {
   }
 }
 
+.demo-layout {
+  align-items: start;
+}
+
+.demo-hero {
+  background: linear-gradient(180deg, rgba(219, 234, 254, 0.45), transparent);
+}
+
+.demo-result {
+  display: grid;
+  gap: 20px;
+}
+
+.certificate-preview {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.8fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.certificate-shell {
+  background: linear-gradient(180deg, #ffffff, #f8fbff);
+  border: 10px solid #1d4ed8;
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: inset 0 0 0 4px #bfdbfe;
+  text-align: center;
+}
+
+.certificate-brand {
+  color: #1d4ed8;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.certificate-subtitle,
+.certificate-copy,
+.meta-label,
+.certificate-sidepanel .key {
+  color: var(--muted);
+}
+
+.certificate-name {
+  font-size: clamp(1.9rem, 4vw, 2.9rem);
+  font-weight: 800;
+  margin: 10px 0;
+}
+
+.certificate-award {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1d4ed8;
+  margin-top: 10px;
+}
+
+.certificate-program {
+  font-size: 1.05rem;
+  margin-top: 8px;
+}
+
+.certificate-meta-grid {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  text-align: left;
+}
+
+.meta-label {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+}
+
+.certificate-footer-row {
+  margin-top: 28px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: end;
+  text-align: left;
+}
+
+.certificate-qr-wrap {
+  text-align: center;
+}
+
+.certificate-qr {
+  width: 140px;
+  height: 140px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: white;
+  padding: 8px;
+}
+
+.certificate-sidepanel {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px;
+  background: #fcfdff;
+}
+
 @media (max-width: 720px) {
   .inline-form,
   .cta-row,
-  .card-header {
+  .card-header,
+  .certificate-footer-row {
     flex-direction: column;
     align-items: stretch;
   }
@@ -400,7 +506,9 @@ input:focus, select:focus, textarea:focus {
     max-width: none;
   }
 
-  .kv {
+  .kv,
+  .certificate-meta-grid,
+  .certificate-preview {
     grid-template-columns: 1fr;
   }
 }

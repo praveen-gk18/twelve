@@ -9,5 +9,16 @@
     "status": "active",
     "txHash": "0xDEMOb8deb1352fa43d5770f713dfad3cfa9f79ee662aca888032fa5d2238c8ae",
     "anchoredAt": "2026-09-25T04:58:03.855Z"
+  },
+  {
+    "credentialId": "CSHLD-2026-6C0D6E76",
+    "hash": "2991106b023ab0f880a29994256a94d5e2eae58386573169ef192ad3886d3318",
+    "issuerId": "2af574ac-724d-4c25-a7b7-eff450c34adb",
+    "metadataURI": "local://credentials/CSHLD-2026-6C0D6E76",
+    "issuedAt": 1790312849675,
+    "expiresAt": null,
+    "status": "active",
+    "txHash": "0x13a1cf3d5831ad6d77e4fdecc12b67042c3efdadb0f5ae4f953ad487c9070308",
+    "anchoredAt": "2026-09-25T05:07:29.675Z"
   }
 ]
