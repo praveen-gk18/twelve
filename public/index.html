@@ -3,90 +3,200 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CredShield — Home</title>
+    <title>CredShield — Trusted Digital Credential Exchange</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <header class="hero home-hero">
-      <div>
-        <p class="eyebrow">CredShield</p>
-        <h1>Two dedicated portals for issuing and verifying digital credentials</h1>
+    <div class="top-strip">
+      <div class="top-strip-inner">
+        <span><strong>CredShield Trust Network</strong> • DigiLocker-inspired professional credential experience</span>
+        <span>Blockchain-backed verification • QR-first sharing • Demo-ready MVP</span>
+      </div>
+    </div>
+
+    <div class="main-nav-wrap">
+      <nav class="main-nav">
+        <a class="brand" href="/">
+          <span class="brand-mark">CS</span>
+          <span class="brand-copy">
+            <span class="brand-title">CredShield</span>
+            <span class="brand-subtitle">Verifiable credentials for institutions and recruiters</span>
+          </span>
+        </a>
+        <div class="nav-links">
+          <a class="nav-link active" href="/">Overview</a>
+          <a class="nav-link" href="/issuer">Issuer Portal</a>
+          <a class="nav-link" href="/verify">Verifier Portal</a>
+          <a class="nav-link" href="/demo-certificate">Demo Generator</a>
+        </div>
+      </nav>
+    </div>
+
+    <header class="hero">
+      <section class="hero-panel">
+        <p class="eyebrow">Trusted Credential Infrastructure</p>
+        <h1>Issue, share, and verify academic credentials with a government-grade interface.</h1>
         <p class="subtitle">
-          A blockchain-inspired credential system built around two workflows: the <strong>issuer portal</strong>
-          for institutions and the <strong>verifier portal</strong> for employers, universities, and recruiters.
+          CredShield is a professional digital credential workspace inspired by modern public-service portals.
+          It helps institutions issue secure certificates, gives candidates instant QR-based sharing, and lets recruiters
+          verify authenticity in seconds.
         </p>
         <div class="cta-row">
-          <a class="primary link-button" href="/issuer">Open issuer portal</a>
-          <a class="secondary link-button" href="/verify">Open verifier portal</a>
-          <a class="secondary link-button" href="/demo-certificate">Open demo certificate generator</a>
+          <a class="link-button primary" href="/issuer">Launch issuer portal</a>
+          <a class="link-button secondary" href="/verify">Open verifier portal</a>
+          <a class="link-button ghost" href="/demo-certificate">Generate demo certificate</a>
         </div>
-      </div>
-      <div class="hero-card">
-        <div class="hero-badge">Hackathon MVP</div>
-        <div class="metric"><strong>2</strong><span>separate user-facing apps</span></div>
-        <div class="metric"><strong>3 layers</strong><span>visible, cryptographic, authority trust</span></div>
-        <div class="metric"><strong>QR-ready</strong><span>every issued credential links to live verification</span></div>
-      </div>
+        <div class="hero-bullets">
+          <div>
+            <strong>Visible trust</strong>
+            <span>Professional certificate layouts, IDs, issuer details, and scannable QR codes.</span>
+          </div>
+          <div>
+            <strong>Cryptographic trust</strong>
+            <span>Hashes, signatures, and anchor records make every change tamper-evident.</span>
+          </div>
+          <div>
+            <strong>Authority trust</strong>
+            <span>Only approved issuers can issue credentials, with live revocation and status checks.</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="hero-card">
+        <div class="hero-badge">Platform Snapshot</div>
+        <div class="metric-grid">
+          <div class="metric">
+            <strong>2</strong>
+            <span>specialized portals</span>
+            <small>One for issuing, one for verification.</small>
+          </div>
+          <div class="metric">
+            <strong>QR</strong>
+            <span>verification built in</span>
+            <small>Every generated credential can open verification instantly.</small>
+          </div>
+          <div class="metric">
+            <strong>MVP</strong>
+            <span>deployment ready</span>
+            <small>Prepared for GitHub + Render and ready for live demos.</small>
+          </div>
+        </div>
+      </aside>
     </header>
 
     <main>
+      <section class="stats-band">
+        <div class="stat-tile">
+          <div class="stat-label">Experience</div>
+          <div class="stat-value">Professional</div>
+          <div class="stat-desc">Government-portal inspired look with richer layout and UI hierarchy.</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-label">Security model</div>
+          <div class="stat-value">3 Layers</div>
+          <div class="stat-desc">Visual trust, cryptographic proof, and issuer authority control.</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-label">Distribution</div>
+          <div class="stat-value">QR + PDF</div>
+          <div class="stat-desc">Suitable for recruiter sharing, email forwarding, and printed certificates.</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-label">Hackathon readiness</div>
+          <div class="stat-value">Demo Ready</div>
+          <div class="stat-desc">Use the dedicated demo generator when you need a quick certificate sample.</div>
+        </div>
+      </section>
+
       <section class="grid two">
-        <article class="card portal-card">
+        <article class="card portal-card card-accent">
+          <span class="section-kicker">Issuer workspace</span>
           <div class="portal-icon">🏛️</div>
-          <h2>Issuer portal</h2>
-          <p>
-            For institutions to onboard issuers, issue digital credentials, generate PDFs and QR codes,
-            anchor proofs, and revoke certificates when needed.
+          <h2>Institution control panel</h2>
+          <p class="section-copy">
+            Designed for universities, training institutes, and certification bodies to onboard issuers,
+            issue credentials, manage record status, and generate polished certificate assets.
           </p>
           <ul class="feature-list">
-            <li>Approve or suspend issuers</li>
-            <li>Issue a credential for a student or employee</li>
-            <li>Generate QR + PDF certificate</li>
-            <li>View anchor hash and revoke credentials</li>
+            <li>Register and approve issuers in the trusted directory</li>
+            <li>Issue credentials with unique IDs, metadata, and digital signatures</li>
+            <li>Generate downloadable PDF certificates with QR verification</li>
+            <li>Revoke or suspend records when needed</li>
           </ul>
-          <a class="primary link-button" href="/issuer">Go to issuer portal</a>
+          <div class="cta-row">
+            <a class="link-button primary" href="/issuer">Open issuer portal</a>
+          </div>
         </article>
 
-        <article class="card portal-card">
+        <article class="card portal-card card-accent surface-soft">
+          <span class="section-kicker">Verifier workspace</span>
           <div class="portal-icon">🔎</div>
-          <h2>Verifier portal</h2>
-          <p>
-            For HR teams, universities, and recruiters to verify a credential instantly using the credential ID
-            or the QR link generated from the issuer portal.
+          <h2>Recruiter and verifier dashboard</h2>
+          <p class="section-copy">
+            Built for hiring teams, universities, and auditors who need instant authenticity checks with a clean,
+            report-like verification experience.
           </p>
           <ul class="feature-list">
-            <li>Instant trust score and validation status</li>
-            <li>Check issuer approval, hash match, signature validity, and live status</li>
-            <li>Preview credential metadata, chain anchor, QR, and PDF</li>
-            <li>Simulate tampering to show why forged edits fail</li>
+            <li>Verify directly from credential ID or QR-generated link</li>
+            <li>Inspect trust score across issuer, hash, signature, and active status</li>
+            <li>Open linked QR and PDF assets from one screen</li>
+            <li>Use the tamper tester to demonstrate why forged edits fail</li>
           </ul>
-          <a class="secondary link-button" href="/verify">Go to verifier portal</a>
+          <div class="cta-row">
+            <a class="link-button secondary" href="/verify">Open verifier portal</a>
+          </div>
         </article>
       </section>
 
       <section class="card architecture-card">
-        <h2>How the two apps work together</h2>
+        <span class="section-kicker">System flow</span>
+        <h2>How the credential lifecycle works</h2>
+        <p class="section-copy">
+          The product experience is intentionally split into a professional issuance flow and a focused verification flow,
+          similar to how public-sector document systems separate administrative actions from citizen access.
+        </p>
         <div class="mini-architecture">
           <div class="arch-step">
-            <strong>1. Institution issues</strong>
-            <span>Creates credential payload and signs it digitally</span>
+            <strong>1. Institution approves issuer</strong>
+            <span>The trusted registry ensures only authorized organizations can create credentials.</span>
           </div>
           <div class="arch-arrow">→</div>
           <div class="arch-step">
-            <strong>2. Proof is anchored</strong>
-            <span>Hash, issuer, and status are recorded in the blockchain layer</span>
+            <strong>2. Credential is created and signed</strong>
+            <span>Payload data is normalized, hashed, and signed before a proof record is anchored.</span>
           </div>
           <div class="arch-arrow">→</div>
           <div class="arch-step">
-            <strong>3. QR is generated</strong>
-            <span>Certificate points directly to the verifier portal</span>
+            <strong>3. QR and PDF are generated</strong>
+            <span>The holder receives a shareable certificate with a direct link into the verifier portal.</span>
           </div>
           <div class="arch-arrow">→</div>
           <div class="arch-step">
-            <strong>4. Verifier checks live</strong>
-            <span>Trust score decides verified, revoked, expired, or tampered</span>
+            <strong>4. Verifier checks live trust</strong>
+            <span>Status, issuer approval, signature validity, and hash integrity determine authenticity.</span>
           </div>
         </div>
+      </section>
+
+      <section class="grid three">
+        <article class="card">
+          <span class="section-kicker">Presentation mode</span>
+          <h3>Demo certificate generator</h3>
+          <p>Create a polished sample certificate without first walking through the full issuer workflow.</p>
+          <div class="cta-row">
+            <a class="link-button secondary" href="/demo-certificate">Open demo generator</a>
+          </div>
+        </article>
+        <article class="card">
+          <span class="section-kicker">Deployment</span>
+          <h3>GitHub + Render ready</h3>
+          <p>The project already includes deployment metadata and can be hosted publicly for review or judging.</p>
+        </article>
+        <article class="card">
+          <span class="section-kicker">Judge talking point</span>
+          <h3>Why it stands out</h3>
+          <p>It combines real verification logic with a portal experience that feels closer to a production service.</p>
+        </article>
       </section>
     </main>
   </body>

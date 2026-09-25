@@ -7,31 +7,100 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <header class="hero portal-hero">
-      <div>
+    <div class="top-strip">
+      <div class="top-strip-inner">
+        <span><strong>Issuer Operations Console</strong> • Approve institutions and issue verifiable credentials</span>
+        <span>Professional admin workflow • Hash + signature + QR generation</span>
+      </div>
+    </div>
+
+    <div class="main-nav-wrap">
+      <nav class="main-nav">
+        <a class="brand" href="/">
+          <span class="brand-mark">CS</span>
+          <span class="brand-copy">
+            <span class="brand-title">CredShield</span>
+            <span class="brand-subtitle">Issuer-side credential administration</span>
+          </span>
+        </a>
+        <div class="nav-links">
+          <a class="nav-link" href="/">Overview</a>
+          <a class="nav-link active" href="/issuer">Issuer Portal</a>
+          <a class="nav-link" href="/verify">Verifier Portal</a>
+          <a class="nav-link" href="/demo-certificate">Demo Generator</a>
+        </div>
+      </nav>
+    </div>
+
+    <header class="hero">
+      <section class="hero-panel">
         <p class="eyebrow">Issuer Portal</p>
-        <h1>Issue tamper-evident credentials from approved institutions</h1>
+        <h1>Manage trusted issuers and produce professional, QR-enabled credentials.</h1>
         <p class="subtitle">
-          This portal is for universities, training institutes, and certifying bodies. It handles issuer approval,
-          credential creation, QR generation, PDF export, mock-chain anchoring, and revocation.
+          This workspace is built for academic offices and certifying institutions. It handles issuer onboarding,
+          credential generation, tamper-evident signing, PDF creation, proof anchoring, and revocation management.
         </p>
         <div class="cta-row">
-          <a class="secondary link-button" href="/">Home</a>
-          <a class="primary link-button" href="/verify">Open verifier portal</a>
+          <a class="link-button primary" href="#issue-form">Issue a credential</a>
+          <a class="link-button secondary" href="/verify">Open verifier portal</a>
         </div>
-      </div>
-      <div class="hero-card compact-card">
-        <div class="hero-badge">Institution workflow</div>
-        <div class="metric"><strong id="issuerCount">0</strong><span>approved issuers</span></div>
-        <div class="metric"><strong id="credentialCount">0</strong><span>credentials issued</span></div>
-      </div>
+        <div class="hero-bullets">
+          <div>
+            <strong>Issuer registry</strong>
+            <span>Maintain the approved list of organizations allowed to create credentials.</span>
+          </div>
+          <div>
+            <strong>Credential production</strong>
+            <span>Generate IDs, hashes, signatures, QR assets, and certificate PDFs from one form.</span>
+          </div>
+          <div>
+            <strong>Lifecycle control</strong>
+            <span>Review issued records and revoke them instantly when status changes.</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="hero-card compact-card">
+        <div class="hero-badge">Institution Workflow</div>
+        <div class="metric-grid">
+          <div class="metric">
+            <strong id="issuerCount">0</strong>
+            <span>approved issuers</span>
+          </div>
+          <div class="metric">
+            <strong id="credentialCount">0</strong>
+            <span>credentials issued</span>
+          </div>
+          <div class="metric">
+            <strong>PDF + QR</strong>
+            <span>share-ready output</span>
+            <small>Every generated record includes certificate and verification assets.</small>
+          </div>
+        </div>
+      </aside>
     </header>
 
     <main>
+      <section class="issuer-ribbon">
+        <article class="ribbon-card primary">
+          <strong>Registry-backed issuance</strong>
+          <span>Only approved issuers should be able to generate trusted credentials.</span>
+        </article>
+        <article class="ribbon-card teal">
+          <strong>Tamper-evident proof</strong>
+          <span>Every certificate is hashed, signed, and linked to a verification route.</span>
+        </article>
+        <article class="ribbon-card gold">
+          <strong>Revocation support</strong>
+          <span>Update credential trust instantly when a record is withdrawn or invalidated.</span>
+        </article>
+      </section>
+
       <section class="grid two">
-        <article class="card">
-          <h2>1. Approve issuer</h2>
-          <p class="helper">Demo admin step to add an institution into the trusted issuer registry.</p>
+        <article class="card card-accent">
+          <span class="section-kicker">Step 1</span>
+          <h2>Approve a trusted issuer</h2>
+          <p class="helper">Register a university, training institute, or certification body into the approved issuer directory.</p>
           <form id="issuerForm" class="form-grid">
             <label>
               Institution name
@@ -52,17 +121,22 @@
           <p id="issuerMessage" class="message"></p>
         </article>
 
-        <article class="card">
+        <article class="card surface-soft">
           <div class="card-header">
-            <h2>Approved issuers</h2>
+            <div>
+              <span class="section-kicker">Directory</span>
+              <h2>Approved issuer list</h2>
+            </div>
           </div>
+          <p class="helper">Use this panel as the operational source of truth for who can issue credentials.</p>
           <div id="issuerList" class="list"></div>
         </article>
       </section>
 
-      <section class="card">
-        <h2>2. Issue credential</h2>
-        <p class="helper">Creates the credential payload, signs it, anchors the hash, and generates a QR-linked PDF.</p>
+      <section id="issue-form" class="card card-accent">
+        <span class="section-kicker">Step 2</span>
+        <h2>Issue a new credential</h2>
+        <p class="helper">Capture recipient details, generate the signed payload, anchor the proof, and produce a QR-enabled certificate.</p>
         <form id="credentialForm" class="form-grid two-columns">
           <label>
             Approved issuer
@@ -112,11 +186,15 @@
         <div id="issueResult"></div>
       </section>
 
-      <section class="card">
+      <section class="card surface-soft">
         <div class="card-header">
-          <h2>3. Issued credentials</h2>
-          <a class="secondary link-button" href="/verify">Test them in verifier portal</a>
+          <div>
+            <span class="section-kicker">Step 3</span>
+            <h2>Issued credentials ledger</h2>
+          </div>
+          <a class="link-button secondary" href="/verify">Test verification workflow</a>
         </div>
+        <p class="helper">Review generated credentials, open the assets, or revoke a record directly from this list.</p>
         <div id="credentialList" class="list"></div>
       </section>
     </main>

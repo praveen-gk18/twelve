@@ -7,78 +7,155 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <header class="hero portal-hero verifier-hero">
-      <div>
+    <div class="top-strip">
+      <div class="top-strip-inner">
+        <span><strong>Verifier Dashboard</strong> • Recruiter-facing authenticity checks with trust scoring</span>
+        <span>Verify using credential ID or QR link • Inspect live status instantly</span>
+      </div>
+    </div>
+
+    <div class="main-nav-wrap">
+      <nav class="main-nav">
+        <a class="brand" href="/">
+          <span class="brand-mark">CS</span>
+          <span class="brand-copy">
+            <span class="brand-title">CredShield</span>
+            <span class="brand-subtitle">Verification portal for employers and auditors</span>
+          </span>
+        </a>
+        <div class="nav-links">
+          <a class="nav-link" href="/">Overview</a>
+          <a class="nav-link" href="/issuer">Issuer Portal</a>
+          <a class="nav-link active" href="/verify">Verifier Portal</a>
+          <a class="nav-link" href="/demo-certificate">Demo Generator</a>
+        </div>
+      </nav>
+    </div>
+
+    <header class="hero">
+      <section class="hero-panel">
         <p class="eyebrow">Verifier Portal</p>
-        <h1>Instantly verify a credential using its ID or QR link</h1>
+        <h1>Check whether a digital certificate is genuine, active, and unchanged.</h1>
         <p class="subtitle">
-          This portal checks visible trust, cryptographic trust, and authority trust. It validates issuer approval,
-          hash integrity, digital signature, and live status from the blockchain layer.
+          The verification experience is optimized for HR teams, admissions offices, and auditors. It validates issuer approval,
+          signature integrity, blockchain-style proof anchoring, and current credential status from one professional screen.
         </p>
         <div class="cta-row">
-          <a class="secondary link-button" href="/">Home</a>
-          <a class="primary link-button" href="/issuer">Open issuer portal</a>
+          <a class="link-button primary" href="#verify-box">Start verification</a>
+          <a class="link-button secondary" href="/issuer">Issue a new credential</a>
         </div>
-      </div>
-      <div class="hero-card compact-card">
-        <div class="hero-badge">Verifier workflow</div>
-        <div class="metric"><strong id="credentialCount">0</strong><span>credentials available</span></div>
-        <div class="metric"><strong>4 checks</strong><span>issuer, hash, signature, status</span></div>
-      </div>
+        <div class="hero-bullets">
+          <div>
+            <strong>Instant lookup</strong>
+            <span>Open the portal from a QR code or enter a credential ID manually.</span>
+          </div>
+          <div>
+            <strong>Trust score</strong>
+            <span>Get a concise 4-check summary that supports presentation and audit use cases.</span>
+          </div>
+          <div>
+            <strong>Tamper proof demo</strong>
+            <span>Edit the payload to show why an altered certificate no longer verifies.</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="hero-card compact-card">
+        <div class="hero-badge">Verification Snapshot</div>
+        <div class="metric-grid">
+          <div class="metric">
+            <strong id="credentialCount">0</strong>
+            <span>credentials available</span>
+          </div>
+          <div class="metric">
+            <strong>4</strong>
+            <span>core checks</span>
+            <small>Issuer, hash, signature, and live active status.</small>
+          </div>
+          <div class="metric">
+            <strong>Live</strong>
+            <span>status awareness</span>
+            <small>Detect verified, revoked, expired, or tampered records quickly.</small>
+          </div>
+        </div>
+      </aside>
     </header>
 
     <main>
+      <section class="verify-ribbon">
+        <article class="ribbon-card primary">
+          <strong>Issuer approved</strong>
+          <span>Only recognized institutions should appear as trusted credential sources.</span>
+        </article>
+        <article class="ribbon-card teal">
+          <strong>Integrity matched</strong>
+          <span>The submitted payload must match the anchored record without any unauthorized edits.</span>
+        </article>
+        <article class="ribbon-card gold">
+          <strong>Live status checked</strong>
+          <span>Verification must also confirm that the certificate is still active and not revoked.</span>
+        </article>
+      </section>
+
       <section class="grid two verify-layout">
-        <article class="card">
-          <h2>1. Verify credential</h2>
+        <article id="verify-box" class="card card-accent">
+          <span class="section-kicker">Step 1</span>
+          <h2>Verify a credential</h2>
           <form id="verifyForm" class="inline-form">
             <input id="verifyId" name="credentialId" placeholder="Enter credential ID" required />
             <button type="submit" class="primary">Verify</button>
           </form>
           <p class="helper">
-            Every QR code generated by the issuer portal points to this page with the credential ID prefilled.
+            Every QR code produced by the issuer and demo pages lands here with the credential ID prefilled.
           </p>
           <div id="verifyResult"></div>
         </article>
 
-        <article class="card">
+        <article class="card surface-soft">
           <div class="card-header">
-            <h2>Quick demo credentials</h2>
+            <div>
+              <span class="section-kicker">Quick access</span>
+              <h2>Available demo credentials</h2>
+            </div>
           </div>
+          <p class="helper">Open a sample below to preview the verification workflow immediately.</p>
           <div id="credentialList" class="list"></div>
         </article>
       </section>
 
-      <section class="card">
+      <section class="card card-accent">
         <div class="card-header">
-          <h2>2. Tamper tester</h2>
+          <div>
+            <span class="section-kicker">Step 2</span>
+            <h2>Tamper tester</h2>
+          </div>
           <button id="verifyEditedBtn" class="secondary">Verify edited payload</button>
         </div>
         <p class="helper">
-          After loading a real credential, edit its fields below to simulate forgery. If any signed value changes,
-          the hash or signature check will fail.
+          After loading a real credential, modify any field below. If the record has been forged or altered, the signature or hash check will fail.
         </p>
         <textarea id="tamperPayload" rows="16" spellcheck="false"></textarea>
       </section>
 
-      <section class="card">
-        <h2>What this verifier checks</h2>
+      <section class="card surface-soft">
+        <span class="section-kicker">Verification logic</span>
+        <h2>What the portal checks before declaring a credential authentic</h2>
         <div class="trust-stack four-up">
           <div>
             <h3>Issuer approved</h3>
-            <p>Only authorized institutions should issue credentials.</p>
+            <p>Confirms the institution exists in the trusted issuer registry.</p>
           </div>
           <div>
             <h3>Hash matched</h3>
-            <p>The document content must match the anchored proof exactly.</p>
+            <p>Ensures the visible certificate data maps exactly to the stored proof.</p>
           </div>
           <div>
             <h3>Signature valid</h3>
-            <p>The institution’s digital signature must validate successfully.</p>
+            <p>Validates the cryptographic signature created by the issuing organization.</p>
           </div>
           <div>
             <h3>Status active</h3>
-            <p>The credential must not be revoked or expired.</p>
+            <p>Rejects certificates that were revoked or have passed their validity date.</p>
           </div>
         </div>
       </section>

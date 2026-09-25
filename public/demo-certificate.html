@@ -7,33 +7,99 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <header class="hero portal-hero demo-hero">
-      <div>
+    <div class="top-strip">
+      <div class="top-strip-inner">
+        <span><strong>Demo Generator</strong> • Create presentation-ready sample certificates with QR verification</span>
+        <span>One-step certificate preview • PDF output • Verification link included</span>
+      </div>
+    </div>
+
+    <div class="main-nav-wrap">
+      <nav class="main-nav">
+        <a class="brand" href="/">
+          <span class="brand-mark">CS</span>
+          <span class="brand-copy">
+            <span class="brand-title">CredShield</span>
+            <span class="brand-subtitle">Professional certificate preview generator</span>
+          </span>
+        </a>
+        <div class="nav-links">
+          <a class="nav-link" href="/">Overview</a>
+          <a class="nav-link" href="/issuer">Issuer Portal</a>
+          <a class="nav-link" href="/verify">Verifier Portal</a>
+          <a class="nav-link active" href="/demo-certificate">Demo Generator</a>
+        </div>
+      </nav>
+    </div>
+
+    <header class="hero">
+      <section class="hero-panel">
         <p class="eyebrow">Demo Certificate Generator</p>
-        <h1>Generate a sample certificate with QR in one click-flow</h1>
+        <h1>Create a professional certificate preview with QR, PDF, and live verification in one flow.</h1>
         <p class="subtitle">
-          This is a lightweight demo page for presentations. Enter a few values, generate a certificate,
-          and instantly get a printable certificate preview, QR code, PDF download, and verification link.
+          This simplified workspace is ideal for judges, client demos, and rapid storytelling. It automatically uses an approved demo issuer,
+          so you can focus on generating a polished certificate experience instead of going through the full admin process.
         </p>
         <div class="cta-row">
-          <a class="secondary link-button" href="/">Home</a>
-          <a class="secondary link-button" href="/issuer">Issuer portal</a>
-          <a class="primary link-button" href="/verify">Verifier portal</a>
+          <a class="link-button primary" href="#demo-form">Generate a certificate</a>
+          <a class="link-button secondary" href="/verify">Open verifier portal</a>
         </div>
-      </div>
-      <div class="hero-card compact-card">
-        <div class="hero-badge">Presentation-ready demo</div>
-        <div class="metric"><strong>QR</strong><span>generated automatically</span></div>
-        <div class="metric"><strong>PDF</strong><span>certificate download included</span></div>
-        <div class="metric"><strong>Live</strong><span>verification page linked</span></div>
-      </div>
+        <div class="hero-bullets">
+          <div>
+            <strong>One-step generation</strong>
+            <span>Enter a few fields and immediately get a professional certificate layout.</span>
+          </div>
+          <div>
+            <strong>QR-linked experience</strong>
+            <span>The generated asset opens directly inside the verification portal for live trust checks.</span>
+          </div>
+          <div>
+            <strong>Presentation ready</strong>
+            <span>Use the PDF and on-screen preview during demos without extra setup.</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="hero-card compact-card">
+        <div class="hero-badge">Generated Assets</div>
+        <div class="metric-grid">
+          <div class="metric">
+            <strong>Preview</strong>
+            <span>certificate layout</span>
+          </div>
+          <div class="metric">
+            <strong>PDF</strong>
+            <span>downloadable output</span>
+          </div>
+          <div class="metric">
+            <strong>QR</strong>
+            <span>instant verification route</span>
+          </div>
+        </div>
+      </aside>
     </header>
 
     <main>
+      <section class="demo-ribbon">
+        <article class="ribbon-card primary">
+          <strong>Certificate payload</strong>
+          <span>Recipient name, credential type, program, grade, dates, and institution details are generated into a signed record.</span>
+        </article>
+        <article class="ribbon-card teal">
+          <strong>Verification QR</strong>
+          <span>A scan-ready QR image points straight to the verifier page for the generated credential.</span>
+        </article>
+        <article class="ribbon-card gold">
+          <strong>Proof metadata</strong>
+          <span>The system creates a hash, signature, and anchor record to support the trust story in demos.</span>
+        </article>
+      </section>
+
       <section class="grid two demo-layout">
-        <article class="card">
-          <h2>Generate demo certificate</h2>
-          <p class="helper">Uses the approved demo issuer automatically, so you do not need to pick an institution first.</p>
+        <article id="demo-form" class="card card-accent">
+          <span class="section-kicker">Input</span>
+          <h2>Generate a demo certificate</h2>
+          <p class="helper">Uses the approved demo issuer automatically, so you do not need to register an institution first.</p>
           <form id="demoForm" class="form-grid two-columns">
             <label>
               Recipient name
@@ -74,20 +140,21 @@
           <p id="demoMessage" class="message"></p>
         </article>
 
-        <article class="card">
-          <h2>What gets created</h2>
+        <article class="card surface-soft">
+          <span class="section-kicker">What you get</span>
+          <h2>Generated output package</h2>
           <div class="trust-stack">
             <div>
-              <h3>1. Certificate payload</h3>
-              <p>Recipient details, credential type, program, grade, dates, and issuer reference.</p>
+              <h3>Certificate preview</h3>
+              <p>A full-page, professional certificate layout suitable for on-screen presentation or screenshots.</p>
             </div>
             <div>
-              <h3>2. QR code</h3>
-              <p>Links directly to the verifier page so anyone can check authenticity instantly.</p>
+              <h3>QR code + verification route</h3>
+              <p>Lets evaluators jump directly into the verifier page to confirm authenticity.</p>
             </div>
             <div>
-              <h3>3. Proof record</h3>
-              <p>Hash, signature, and mock-chain anchor are created for tamper-evident verification.</p>
+              <h3>Downloadable PDF</h3>
+              <p>Useful for sending, printing, or adding to a project submission as proof of the workflow.</p>
             </div>
           </div>
         </article>
