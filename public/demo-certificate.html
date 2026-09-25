@@ -3,166 +3,95 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CredShield — Demo Certificate Generator</title>
+    <title>CredShield — Certificate Generator</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
-  <body>
-    <div class="top-strip">
-      <div class="top-strip-inner">
-        <span><strong>Demo Generator</strong> • Create presentation-ready sample certificates with QR verification</span>
-        <span>One-step certificate preview • PDF output • Verification link included</span>
-      </div>
+  <body class="vc-body">
+    <div class="vc-app-bg vc-root">
+      <header class="vc-appbar vc-no-print">
+        <div class="vc-appbar-inner">
+          <div class="vc-brand">
+            <div class="vc-brand-mark">CS</div>
+            <div>
+              <div class="vc-brand-name">CredShield</div>
+              <div class="vc-brand-sub">Certificate preview generator</div>
+            </div>
+          </div>
+          <nav class="vc-nav-actions">
+            <a class="vc-tab" href="/">Overview</a>
+            <a class="vc-tab" href="/issuer">Issuer Portal</a>
+            <a class="vc-tab" href="/verify">Verifier Portal</a>
+            <a class="vc-tab is-active" href="/demo-certificate">Certificate Generator</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="vc-shell vc-main vc-stack">
+        <section class="vc-hero">
+          <div class="vc-card vc-card-pad vc-stack">
+            <div class="vc-row"><span class="vc-pill vc-pill-blue">Certificate generator</span></div>
+            <h1 class="vc-hero-title">Create a certificate preview with QR, PDF, and live verification.</h1>
+            <p class="vc-muted" style="margin:0; max-width:60ch; line-height:1.7;">
+              This workspace uses an approved issuer automatically, so you can focus on generating a clear certificate preview
+              instead of going through the full issuer process first.
+            </p>
+            <div class="vc-row">
+              <a class="vc-btn vc-btn-primary" href="#demo-form">Generate a certificate</a>
+              <a class="vc-btn vc-btn-secondary" href="/verify">Open verifier portal</a>
+            </div>
+          </div>
+          <aside class="vc-card vc-card-pad vc-stack">
+            <span class="vc-pill vc-pill-slate">Generated assets</span>
+            <div class="vc-kpi-grid" style="grid-template-columns:minmax(0,1fr);">
+              <div class="vc-kpi"><div class="vc-kpi-value">Preview</div><div class="vc-kpi-label">certificate layout</div></div>
+              <div class="vc-kpi"><div class="vc-kpi-value">PDF</div><div class="vc-kpi-label">downloadable output</div></div>
+              <div class="vc-kpi"><div class="vc-kpi-value">QR</div><div class="vc-kpi-label">instant verification route</div></div>
+            </div>
+          </aside>
+        </section>
+
+        <section class="vc-kpi-grid">
+          <div class="vc-card vc-card-pad"><div class="vc-title-sm">Certificate payload</div><div class="vc-muted" style="margin-top:0.35rem;">Recipient details, credential type, program, grade, dates, and institution details are generated into a signed record.</div></div>
+          <div class="vc-card vc-card-pad"><div class="vc-title-sm">Verification QR</div><div class="vc-muted" style="margin-top:0.35rem;">A scan-ready QR image points straight to the verifier page for the generated credential.</div></div>
+          <div class="vc-card vc-card-pad"><div class="vc-title-sm">Proof metadata</div><div class="vc-muted" style="margin-top:0.35rem;">The system creates a hash, signature, and anchor record to support the trust flow.</div></div>
+        </section>
+
+        <section class="vc-grid-2">
+          <article id="demo-form" class="vc-card vc-card-pad">
+            <div class="vc-section">
+              <div class="vc-section-head"><div class="vc-section-step">1</div><h2 class="vc-section-title">Generate a certificate</h2></div>
+              <p class="vc-section-sub">Uses the approved issuer automatically, so you do not need to register an institution first.</p>
+            </div>
+            <form id="demoForm" class="vc-form-grid">
+              <label class="vc-field"><span class="vc-label">Recipient name</span><input class="vc-input" name="studentName" placeholder="Arun Kumar" required /></label>
+              <label class="vc-field"><span class="vc-label">Recipient email (optional)</span><input class="vc-input" name="studentEmail" type="email" placeholder="arun@example.com" /></label>
+              <label class="vc-field"><span class="vc-label">Credential type</span><input class="vc-input" name="credentialType" placeholder="Certificate of Completion" required /></label>
+              <label class="vc-field"><span class="vc-label">Program / course</span><input class="vc-input" name="program" placeholder="Blockchain Fundamentals" required /></label>
+              <label class="vc-field"><span class="vc-label">Grade / result</span><input class="vc-input" name="grade" placeholder="A+" required /></label>
+              <label class="vc-field"><span class="vc-label">Institution name (optional)</span><input class="vc-input" name="institutionName" placeholder="CredShield University" /></label>
+              <label class="vc-field"><span class="vc-label">Issue date</span><input class="vc-input" name="issueDate" type="date" /></label>
+              <label class="vc-field"><span class="vc-label">Expiry date (optional)</span><input class="vc-input" name="expiresAt" type="date" /></label>
+              <div class="vc-form-actions"><button type="submit" class="vc-btn vc-btn-primary">Generate certificate</button></div>
+            </form>
+            <p id="demoMessage" class="vc-section-sub" style="margin-top:0.75rem;"></p>
+          </article>
+
+          <article class="vc-card vc-card-pad">
+            <div class="vc-section">
+              <div class="vc-section-head"><div class="vc-section-step">2</div><h2 class="vc-section-title">Generated output package</h2></div>
+              <p class="vc-section-sub">You receive a certificate preview, QR code, PDF output, and verification route.</p>
+            </div>
+            <div class="vc-stack" style="gap:0.75rem;">
+              <div class="vc-note-box"><strong>Certificate preview</strong><div class="vc-muted" style="margin-top:0.35rem;">A full-page certificate layout suitable for on-screen review or screenshots.</div></div>
+              <div class="vc-note-box"><strong>QR code + verification route</strong><div class="vc-muted" style="margin-top:0.35rem;">Lets viewers jump directly into the verifier page to confirm authenticity.</div></div>
+              <div class="vc-note-box"><strong>Downloadable PDF</strong><div class="vc-muted" style="margin-top:0.35rem;">Useful for sending, printing, or attaching as proof of the workflow.</div></div>
+            </div>
+          </article>
+        </section>
+
+        <section id="demoResult" class="vc-stack"></section>
+      </main>
     </div>
-
-    <div class="main-nav-wrap">
-      <nav class="main-nav">
-        <a class="brand" href="/">
-          <span class="brand-mark">CS</span>
-          <span class="brand-copy">
-            <span class="brand-title">CredShield</span>
-            <span class="brand-subtitle">Professional certificate preview generator</span>
-          </span>
-        </a>
-        <div class="nav-links">
-          <a class="nav-link" href="/">Overview</a>
-          <a class="nav-link" href="/issuer">Issuer Portal</a>
-          <a class="nav-link" href="/verify">Verifier Portal</a>
-          <a class="nav-link active" href="/demo-certificate">Demo Generator</a>
-        </div>
-      </nav>
-    </div>
-
-    <header class="hero">
-      <section class="hero-panel">
-        <p class="eyebrow">Demo Certificate Generator</p>
-        <h1>Create a professional certificate preview with QR, PDF, and live verification in one flow.</h1>
-        <p class="subtitle">
-          This simplified workspace is ideal for judges, client demos, and rapid storytelling. It automatically uses an approved demo issuer,
-          so you can focus on generating a polished certificate experience instead of going through the full admin process.
-        </p>
-        <div class="cta-row">
-          <a class="link-button primary" href="#demo-form">Generate a certificate</a>
-          <a class="link-button secondary" href="/verify">Open verifier portal</a>
-        </div>
-        <div class="hero-bullets">
-          <div>
-            <strong>One-step generation</strong>
-            <span>Enter a few fields and immediately get a professional certificate layout.</span>
-          </div>
-          <div>
-            <strong>QR-linked experience</strong>
-            <span>The generated asset opens directly inside the verification portal for live trust checks.</span>
-          </div>
-          <div>
-            <strong>Presentation ready</strong>
-            <span>Use the PDF and on-screen preview during demos without extra setup.</span>
-          </div>
-        </div>
-      </section>
-
-      <aside class="hero-card compact-card">
-        <div class="hero-badge">Generated Assets</div>
-        <div class="metric-grid">
-          <div class="metric">
-            <strong>Preview</strong>
-            <span>certificate layout</span>
-          </div>
-          <div class="metric">
-            <strong>PDF</strong>
-            <span>downloadable output</span>
-          </div>
-          <div class="metric">
-            <strong>QR</strong>
-            <span>instant verification route</span>
-          </div>
-        </div>
-      </aside>
-    </header>
-
-    <main>
-      <section class="demo-ribbon">
-        <article class="ribbon-card primary">
-          <strong>Certificate payload</strong>
-          <span>Recipient name, credential type, program, grade, dates, and institution details are generated into a signed record.</span>
-        </article>
-        <article class="ribbon-card teal">
-          <strong>Verification QR</strong>
-          <span>A scan-ready QR image points straight to the verifier page for the generated credential.</span>
-        </article>
-        <article class="ribbon-card gold">
-          <strong>Proof metadata</strong>
-          <span>The system creates a hash, signature, and anchor record to support the trust story in demos.</span>
-        </article>
-      </section>
-
-      <section class="grid two demo-layout">
-        <article id="demo-form" class="card card-accent">
-          <span class="section-kicker">Input</span>
-          <h2>Generate a demo certificate</h2>
-          <p class="helper">Uses the approved demo issuer automatically, so you do not need to register an institution first.</p>
-          <form id="demoForm" class="form-grid two-columns">
-            <label>
-              Recipient name
-              <input name="studentName" placeholder="Arun Kumar" required />
-            </label>
-            <label>
-              Recipient email (optional)
-              <input name="studentEmail" type="email" placeholder="arun@example.com" />
-            </label>
-            <label>
-              Credential type
-              <input name="credentialType" placeholder="Certificate of Completion" required />
-            </label>
-            <label>
-              Program / course
-              <input name="program" placeholder="Blockchain Fundamentals" required />
-            </label>
-            <label>
-              Grade / result
-              <input name="grade" placeholder="A+" required />
-            </label>
-            <label>
-              Institution name (optional)
-              <input name="institutionName" placeholder="CredShield Demo University" />
-            </label>
-            <label>
-              Issue date
-              <input name="issueDate" type="date" />
-            </label>
-            <label>
-              Expiry date (optional)
-              <input name="expiresAt" type="date" />
-            </label>
-            <div class="form-actions full-width">
-              <button type="submit" class="primary">Generate demo certificate</button>
-            </div>
-          </form>
-          <p id="demoMessage" class="message"></p>
-        </article>
-
-        <article class="card surface-soft">
-          <span class="section-kicker">What you get</span>
-          <h2>Generated output package</h2>
-          <div class="trust-stack">
-            <div>
-              <h3>Certificate preview</h3>
-              <p>A full-page, professional certificate layout suitable for on-screen presentation or screenshots.</p>
-            </div>
-            <div>
-              <h3>QR code + verification route</h3>
-              <p>Lets evaluators jump directly into the verifier page to confirm authenticity.</p>
-            </div>
-            <div>
-              <h3>Downloadable PDF</h3>
-              <p>Useful for sending, printing, or adding to a project submission as proof of the workflow.</p>
-            </div>
-          </div>
-        </article>
-      </section>
-
-      <section id="demoResult" class="demo-result"></section>
-    </main>
-
     <script src="/demo-certificate.js"></script>
   </body>
 </html>

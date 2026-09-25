@@ -6,161 +6,104 @@
     <title>CredShield — Verifier Portal</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
-  <body>
-    <div class="top-strip">
-      <div class="top-strip-inner">
-        <span><strong>Verifier Dashboard</strong> • Recruiter-facing authenticity checks with trust scoring</span>
-        <span>Verify using credential ID or QR link • Inspect live status instantly</span>
-      </div>
-    </div>
-
-    <div class="main-nav-wrap">
-      <nav class="main-nav">
-        <a class="brand" href="/">
-          <span class="brand-mark">CS</span>
-          <span class="brand-copy">
-            <span class="brand-title">CredShield</span>
-            <span class="brand-subtitle">Verification portal for employers and auditors</span>
-          </span>
-        </a>
-        <div class="nav-links">
-          <a class="nav-link" href="/">Overview</a>
-          <a class="nav-link" href="/issuer">Issuer Portal</a>
-          <a class="nav-link active" href="/verify">Verifier Portal</a>
-          <a class="nav-link" href="/demo-certificate">Demo Generator</a>
-        </div>
-      </nav>
-    </div>
-
-    <header class="hero">
-      <section class="hero-panel">
-        <p class="eyebrow">Verifier Portal</p>
-        <h1>Check whether a digital certificate is genuine, active, and unchanged.</h1>
-        <p class="subtitle">
-          The verification experience is optimized for HR teams, admissions offices, and auditors. It validates issuer approval,
-          signature integrity, blockchain-style proof anchoring, and current credential status from one professional screen.
-        </p>
-        <div class="cta-row">
-          <a class="link-button primary" href="#verify-box">Start verification</a>
-          <a class="link-button secondary" href="/issuer">Issue a new credential</a>
-        </div>
-        <div class="hero-bullets">
-          <div>
-            <strong>Instant lookup</strong>
-            <span>Open the portal from a QR code or enter a credential ID manually.</span>
-          </div>
-          <div>
-            <strong>Trust score</strong>
-            <span>Get a concise 4-check summary that supports presentation and audit use cases.</span>
-          </div>
-          <div>
-            <strong>Tamper proof demo</strong>
-            <span>Edit the payload to show why an altered certificate no longer verifies.</span>
-          </div>
-        </div>
-      </section>
-
-      <aside class="hero-card compact-card">
-        <div class="hero-badge">Verification Snapshot</div>
-        <div class="metric-grid">
-          <div class="metric">
-            <strong id="credentialCount">0</strong>
-            <span>credentials available</span>
-          </div>
-          <div class="metric">
-            <strong>4</strong>
-            <span>core checks</span>
-            <small>Issuer, hash, signature, and live active status.</small>
-          </div>
-          <div class="metric">
-            <strong>Live</strong>
-            <span>status awareness</span>
-            <small>Detect verified, revoked, expired, or tampered records quickly.</small>
-          </div>
-        </div>
-      </aside>
-    </header>
-
-    <main>
-      <section class="verify-ribbon">
-        <article class="ribbon-card primary">
-          <strong>Issuer approved</strong>
-          <span>Only recognized institutions should appear as trusted credential sources.</span>
-        </article>
-        <article class="ribbon-card teal">
-          <strong>Integrity matched</strong>
-          <span>The submitted payload must match the anchored record without any unauthorized edits.</span>
-        </article>
-        <article class="ribbon-card gold">
-          <strong>Live status checked</strong>
-          <span>Verification must also confirm that the certificate is still active and not revoked.</span>
-        </article>
-      </section>
-
-      <section class="grid two verify-layout">
-        <article id="verify-box" class="card card-accent">
-          <span class="section-kicker">Step 1</span>
-          <h2>Verify a credential</h2>
-          <form id="verifyForm" class="inline-form">
-            <input id="verifyId" name="credentialId" placeholder="Enter credential ID" required />
-            <button type="submit" class="primary">Verify</button>
-          </form>
-          <p class="helper">
-            Every QR code produced by the issuer and demo pages lands here with the credential ID prefilled.
-          </p>
-          <div id="verifyResult"></div>
-        </article>
-
-        <article class="card surface-soft">
-          <div class="card-header">
+  <body class="vc-body">
+    <div class="vc-app-bg vc-root">
+      <header class="vc-appbar vc-no-print">
+        <div class="vc-appbar-inner">
+          <div class="vc-brand">
+            <div class="vc-brand-mark">CS</div>
             <div>
-              <span class="section-kicker">Quick access</span>
-              <h2>Available demo credentials</h2>
+              <div class="vc-brand-name">CredShield</div>
+              <div class="vc-brand-sub">Verification portal for employers and auditors</div>
             </div>
           </div>
-          <p class="helper">Open a sample below to preview the verification workflow immediately.</p>
-          <div id="credentialList" class="list"></div>
-        </article>
-      </section>
-
-      <section class="card card-accent">
-        <div class="card-header">
-          <div>
-            <span class="section-kicker">Step 2</span>
-            <h2>Tamper tester</h2>
-          </div>
-          <button id="verifyEditedBtn" class="secondary">Verify edited payload</button>
+          <nav class="vc-nav-actions">
+            <a class="vc-tab" href="/">Overview</a>
+            <a class="vc-tab" href="/issuer">Issuer Portal</a>
+            <a class="vc-tab is-active" href="/verify">Verifier Portal</a>
+            <a class="vc-tab" href="/demo-certificate">Certificate Generator</a>
+          </nav>
         </div>
-        <p class="helper">
-          After loading a real credential, modify any field below. If the record has been forged or altered, the signature or hash check will fail.
-        </p>
-        <textarea id="tamperPayload" rows="16" spellcheck="false"></textarea>
-      </section>
+      </header>
 
-      <section class="card surface-soft">
-        <span class="section-kicker">Verification logic</span>
-        <h2>What the portal checks before declaring a credential authentic</h2>
-        <div class="trust-stack four-up">
-          <div>
-            <h3>Issuer approved</h3>
-            <p>Confirms the institution exists in the trusted issuer registry.</p>
+      <main class="vc-shell vc-main vc-stack">
+        <section class="vc-hero">
+          <div class="vc-card vc-card-pad vc-stack">
+            <div class="vc-row"><span class="vc-pill vc-pill-blue">Verifier portal</span></div>
+            <h1 class="vc-hero-title">Check whether a digital certificate is genuine, active, and unchanged.</h1>
+            <p class="vc-muted" style="margin:0; max-width:60ch; line-height:1.7;">
+              The verification experience is optimized for HR teams, admissions offices, and auditors. It validates issuer approval,
+              signature integrity, proof anchoring, and current credential status from one screen.
+            </p>
+            <div class="vc-row">
+              <a class="vc-btn vc-btn-primary" href="#verify-box">Start verification</a>
+              <a class="vc-btn vc-btn-secondary" href="/issuer">Issue a new credential</a>
+            </div>
           </div>
-          <div>
-            <h3>Hash matched</h3>
-            <p>Ensures the visible certificate data maps exactly to the stored proof.</p>
-          </div>
-          <div>
-            <h3>Signature valid</h3>
-            <p>Validates the cryptographic signature created by the issuing organization.</p>
-          </div>
-          <div>
-            <h3>Status active</h3>
-            <p>Rejects certificates that were revoked or have passed their validity date.</p>
-          </div>
-        </div>
-      </section>
-    </main>
 
+          <aside class="vc-card vc-card-pad vc-stack">
+            <span class="vc-pill vc-pill-slate">Verification snapshot</span>
+            <div class="vc-kpi-grid" style="grid-template-columns:minmax(0,1fr);">
+              <div class="vc-kpi"><div class="vc-kpi-value" id="credentialCount">0</div><div class="vc-kpi-label">credentials available</div></div>
+              <div class="vc-kpi"><div class="vc-kpi-value">4</div><div class="vc-kpi-label">core checks</div></div>
+              <div class="vc-kpi"><div class="vc-kpi-value">Live</div><div class="vc-kpi-label">status awareness</div></div>
+            </div>
+          </aside>
+        </section>
+
+        <section class="vc-kpi-grid">
+          <div class="vc-card vc-card-pad"><div class="vc-title-sm">Issuer approved</div><div class="vc-muted" style="margin-top:0.35rem;">Only recognized institutions should appear as trusted credential sources.</div></div>
+          <div class="vc-card vc-card-pad"><div class="vc-title-sm">Integrity matched</div><div class="vc-muted" style="margin-top:0.35rem;">The submitted payload must match the anchored record without unauthorized edits.</div></div>
+          <div class="vc-card vc-card-pad"><div class="vc-title-sm">Live status checked</div><div class="vc-muted" style="margin-top:0.35rem;">Verification also confirms that the certificate is still active and not revoked.</div></div>
+        </section>
+
+        <section class="vc-grid-2">
+          <article id="verify-box" class="vc-card vc-card-pad">
+            <div class="vc-section">
+              <div class="vc-section-head"><div class="vc-section-step">1</div><h2 class="vc-section-title">Verify a credential</h2></div>
+              <p class="vc-section-sub">Every QR code produced by the issuer and generator pages lands here with the credential ID prefilled.</p>
+            </div>
+            <form id="verifyForm" class="vc-inline-form">
+              <input id="verifyId" class="vc-input" name="credentialId" placeholder="Enter credential ID" required />
+              <button type="submit" class="vc-btn vc-btn-primary">Verify</button>
+            </form>
+            <div id="verifyResult" style="margin-top:1rem;"></div>
+          </article>
+
+          <article class="vc-card vc-card-pad">
+            <div class="vc-section">
+              <div class="vc-section-head"><div class="vc-section-step">2</div><h2 class="vc-section-title">Available credentials</h2></div>
+              <p class="vc-section-sub">Open a sample below to preview the verification workflow immediately.</p>
+            </div>
+            <div id="credentialList" class="vc-panel-list"></div>
+          </article>
+        </section>
+
+        <section class="vc-card vc-card-pad">
+          <div class="vc-toolbar" style="margin-bottom:1rem;">
+            <div>
+              <div class="vc-section-head"><div class="vc-section-step">3</div><h2 class="vc-section-title">Tamper tester</h2></div>
+              <p class="vc-section-sub">Modify any field below to simulate an altered certificate. If the record has changed, the signature or hash check will fail.</p>
+            </div>
+            <button id="verifyEditedBtn" class="vc-btn vc-btn-secondary">Verify edited payload</button>
+          </div>
+          <textarea id="tamperPayload" class="vc-textarea vc-mono" rows="16" spellcheck="false"></textarea>
+        </section>
+
+        <section class="vc-card vc-card-pad">
+          <div class="vc-section">
+            <div class="vc-section-head"><div class="vc-section-step">4</div><h2 class="vc-section-title">Verification logic</h2></div>
+            <p class="vc-section-sub">The portal validates these checks before declaring a credential authentic.</p>
+          </div>
+          <div class="vc-grid-2">
+            <div class="vc-note-box"><strong>Issuer approved</strong><div class="vc-muted" style="margin-top:0.35rem;">Confirms the institution exists in the trusted issuer registry.</div></div>
+            <div class="vc-note-box"><strong>Hash matched</strong><div class="vc-muted" style="margin-top:0.35rem;">Ensures the visible certificate data maps exactly to the stored proof.</div></div>
+            <div class="vc-note-box"><strong>Signature valid</strong><div class="vc-muted" style="margin-top:0.35rem;">Validates the cryptographic signature created by the issuing organization.</div></div>
+            <div class="vc-note-box"><strong>Status active</strong><div class="vc-muted" style="margin-top:0.35rem;">Rejects certificates that were revoked or have passed their validity date.</div></div>
+          </div>
+        </section>
+      </main>
+    </div>
     <script src="/verify.js"></script>
   </body>
 </html>

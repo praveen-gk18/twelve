@@ -25,64 +25,80 @@ async function api(path, options = {}) {
 function renderDemoResult(data) {
   const { credential, issuer } = data;
   byId('demoResult').innerHTML = `
-    <section class="card">
-      <div class="card-header">
-        <h2>Generated certificate</h2>
-        <span class="status good">DEMO READY</span>
+    <section class="vc-card vc-card-pad vc-stack vc-animate-pop">
+      <div class="vc-toolbar">
+        <h2 class="vc-title-lg">Generated certificate</h2>
+        <span class="vc-pill vc-pill-green"><span class="vc-pill-dot"></span>Ready</span>
       </div>
-      <div class="certificate-preview">
-        <div class="certificate-shell">
-          <div class="certificate-brand">CredShield</div>
-          <h3>Verifiable Digital Credential</h3>
-          <p class="certificate-subtitle">Currency-note-inspired anti-forgery demo certificate</p>
 
-          <p class="certificate-copy">This is to certify that</p>
-          <div class="certificate-name">${escapeHtml(credential.payload.studentName)}</div>
-          <p class="certificate-copy">has successfully earned</p>
-          <div class="certificate-award">${escapeHtml(credential.payload.credentialType)}</div>
-          <div class="certificate-program">${escapeHtml(credential.payload.program)}</div>
+      <div class="vc-cert-wrap">
+        <div class="vc-cert">
+          <div class="vc-cert-frame">
+            <div class="vc-cert-header">
+              <div>
+                <h3 class="vc-cert-institution">${escapeHtml(credential.payload.institutionName)}</h3>
+                <p class="vc-cert-tagline">Verified digital credential</p>
+              </div>
+              <svg class="vc-seal" width="72" height="72" viewBox="0 0 72 72" aria-hidden="true">
+                <circle cx="36" cy="36" r="33" fill="#0f172a"></circle>
+                <circle cx="36" cy="36" r="25" fill="none" stroke="#ffffff" stroke-width="2"></circle>
+                <text x="36" y="31" text-anchor="middle" fill="#ffffff" font-size="8" font-family="Arial">CRED</text>
+                <text x="36" y="43" text-anchor="middle" fill="#ffffff" font-size="8" font-family="Arial">SHIELD</text>
+              </svg>
+            </div>
 
-          <div class="certificate-meta-grid">
-            <div>
-              <span class="meta-label">Institution</span>
-              <strong>${escapeHtml(credential.payload.institutionName)}</strong>
+            <div class="vc-cert-body">
+              <div class="vc-cert-eyebrow">Certificate of Achievement</div>
+              <div class="vc-cert-name">${escapeHtml(credential.payload.studentName)}</div>
+              <div class="vc-cert-text">
+                This certifies that <b>${escapeHtml(credential.payload.studentName)}</b> has successfully earned
+                <b>${escapeHtml(credential.payload.credentialType)}</b> in <b>${escapeHtml(credential.payload.program)}</b>.
+              </div>
             </div>
-            <div>
-              <span class="meta-label">Grade / Result</span>
-              <strong>${escapeHtml(credential.payload.grade)}</strong>
-            </div>
-            <div>
-              <span class="meta-label">Issue date</span>
-              <strong>${escapeHtml(credential.payload.issueDate)}</strong>
-            </div>
-            <div>
-              <span class="meta-label">Credential ID</span>
-              <strong>${escapeHtml(credential.id)}</strong>
-            </div>
-          </div>
 
-          <div class="certificate-footer-row">
-            <div>
-              <div class="meta-label">Issued by</div>
-              <strong>${escapeHtml(issuer.name)}</strong>
-              <div class="helper">Approved issuer • DID on record</div>
+            <div class="vc-grid-2">
+              <div class="vc-note-box"><strong>Grade / Result</strong><div class="vc-muted" style="margin-top:0.3rem;">${escapeHtml(credential.payload.grade)}</div></div>
+              <div class="vc-note-box"><strong>Issue date</strong><div class="vc-muted" style="margin-top:0.3rem;">${escapeHtml(credential.payload.issueDate)}</div></div>
+              <div class="vc-note-box"><strong>Credential ID</strong><div class="vc-muted vc-mono" style="margin-top:0.3rem;">${escapeHtml(credential.id)}</div></div>
+              <div class="vc-note-box"><strong>Issuer DID</strong><div class="vc-muted vc-mono" style="margin-top:0.3rem;">${escapeHtml(issuer.did)}</div></div>
             </div>
-            <div class="certificate-qr-wrap">
-              <img src="${credential.qrPath}" alt="QR code for verification" class="certificate-qr" />
-              <span class="helper">Scan to verify</span>
+
+            <div class="vc-cert-footer">
+              <img src="${credential.qrPath}" alt="QR code for verification" class="vc-cert-qr" />
+              <div class="vc-min-w-0">
+                <div class="vc-title-sm">Verification</div>
+                <p class="vc-section-sub" style="margin-top:0.35rem;">Scan the QR code or open the verifier link to check authenticity and current status.</p>
+              </div>
+            </div>
+
+            <div class="vc-cert-signatures">
+              <div>
+                <div class="vc-cert-signature">${escapeHtml(issuer.name)}</div>
+                <div class="vc-cert-rule"></div>
+                <p class="vc-cert-role">Authorized issuer</p>
+              </div>
+              <div style="text-align:right;">
+                <div class="vc-cert-signature">CredShield Registry</div>
+                <div class="vc-cert-rule"></div>
+                <p class="vc-cert-role">Verification record</p>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="certificate-sidepanel">
-          <h3>Generated assets</h3>
-          <div class="kv"><div class="key">Anchor tx</div><div>${escapeHtml(credential.anchor.txHash)}</div></div>
-          <div class="kv"><div class="key">Hash</div><div>${escapeHtml(credential.hash)}</div></div>
-          <div class="kv"><div class="key">Verifier link</div><div>${escapeHtml(credential.verifyUrl)}</div></div>
-          <div class="links">
-            <a href="${credential.pdfPath}" target="_blank">Download PDF</a>
-            <a href="${credential.qrPath}" target="_blank">Open QR</a>
-            <a href="${credential.verifyUrl}" target="_blank">Open verification</a>
+        <div class="vc-cert-side">
+          <div class="vc-card vc-card-pad">
+            <h3 class="vc-title-md">Generated assets</h3>
+            <dl class="vc-defs" style="margin-top:0.75rem;">
+              <div><dt>Anchor tx</dt><dd class="vc-hash">${escapeHtml(credential.anchor.txHash)}</dd></div>
+              <div><dt>Hash</dt><dd class="vc-hash">${escapeHtml(credential.hash)}</dd></div>
+              <div><dt>Verifier link</dt><dd class="vc-hash">${escapeHtml(credential.verifyUrl)}</dd></div>
+            </dl>
+            <div class="vc-action-row">
+              <a class="vc-btn vc-btn-primary" href="${credential.verifyUrl}" target="_blank">Open verification</a>
+              <a class="vc-btn vc-btn-secondary" href="${credential.pdfPath}" target="_blank">Download PDF</a>
+              <a class="vc-btn vc-btn-secondary" href="${credential.qrPath}" target="_blank">Open QR</a>
+            </div>
           </div>
         </div>
       </div>
@@ -102,7 +118,7 @@ async function bootstrap() {
         method: 'POST',
         body: JSON.stringify(payload),
       });
-      byId('demoMessage').textContent = 'Demo certificate generated successfully.';
+      byId('demoMessage').textContent = 'Certificate generated successfully.';
       renderDemoResult(data);
     } catch (error) {
       byId('demoMessage').textContent = error.message;

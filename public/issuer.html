@@ -6,199 +6,114 @@
     <title>CredShield — Issuer Portal</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
-  <body>
-    <div class="top-strip">
-      <div class="top-strip-inner">
-        <span><strong>Issuer Operations Console</strong> • Approve institutions and issue verifiable credentials</span>
-        <span>Professional admin workflow • Hash + signature + QR generation</span>
-      </div>
-    </div>
-
-    <div class="main-nav-wrap">
-      <nav class="main-nav">
-        <a class="brand" href="/">
-          <span class="brand-mark">CS</span>
-          <span class="brand-copy">
-            <span class="brand-title">CredShield</span>
-            <span class="brand-subtitle">Issuer-side credential administration</span>
-          </span>
-        </a>
-        <div class="nav-links">
-          <a class="nav-link" href="/">Overview</a>
-          <a class="nav-link active" href="/issuer">Issuer Portal</a>
-          <a class="nav-link" href="/verify">Verifier Portal</a>
-          <a class="nav-link" href="/demo-certificate">Demo Generator</a>
-        </div>
-      </nav>
-    </div>
-
-    <header class="hero">
-      <section class="hero-panel">
-        <p class="eyebrow">Issuer Portal</p>
-        <h1>Manage trusted issuers and produce professional, QR-enabled credentials.</h1>
-        <p class="subtitle">
-          This workspace is built for academic offices and certifying institutions. It handles issuer onboarding,
-          credential generation, tamper-evident signing, PDF creation, proof anchoring, and revocation management.
-        </p>
-        <div class="cta-row">
-          <a class="link-button primary" href="#issue-form">Issue a credential</a>
-          <a class="link-button secondary" href="/verify">Open verifier portal</a>
-        </div>
-        <div class="hero-bullets">
-          <div>
-            <strong>Issuer registry</strong>
-            <span>Maintain the approved list of organizations allowed to create credentials.</span>
-          </div>
-          <div>
-            <strong>Credential production</strong>
-            <span>Generate IDs, hashes, signatures, QR assets, and certificate PDFs from one form.</span>
-          </div>
-          <div>
-            <strong>Lifecycle control</strong>
-            <span>Review issued records and revoke them instantly when status changes.</span>
-          </div>
-        </div>
-      </section>
-
-      <aside class="hero-card compact-card">
-        <div class="hero-badge">Institution Workflow</div>
-        <div class="metric-grid">
-          <div class="metric">
-            <strong id="issuerCount">0</strong>
-            <span>approved issuers</span>
-          </div>
-          <div class="metric">
-            <strong id="credentialCount">0</strong>
-            <span>credentials issued</span>
-          </div>
-          <div class="metric">
-            <strong>PDF + QR</strong>
-            <span>share-ready output</span>
-            <small>Every generated record includes certificate and verification assets.</small>
-          </div>
-        </div>
-      </aside>
-    </header>
-
-    <main>
-      <section class="issuer-ribbon">
-        <article class="ribbon-card primary">
-          <strong>Registry-backed issuance</strong>
-          <span>Only approved issuers should be able to generate trusted credentials.</span>
-        </article>
-        <article class="ribbon-card teal">
-          <strong>Tamper-evident proof</strong>
-          <span>Every certificate is hashed, signed, and linked to a verification route.</span>
-        </article>
-        <article class="ribbon-card gold">
-          <strong>Revocation support</strong>
-          <span>Update credential trust instantly when a record is withdrawn or invalidated.</span>
-        </article>
-      </section>
-
-      <section class="grid two">
-        <article class="card card-accent">
-          <span class="section-kicker">Step 1</span>
-          <h2>Approve a trusted issuer</h2>
-          <p class="helper">Register a university, training institute, or certification body into the approved issuer directory.</p>
-          <form id="issuerForm" class="form-grid">
-            <label>
-              Institution name
-              <input name="name" placeholder="ABC University" required />
-            </label>
-            <label>
-              Issuer email
-              <input name="email" type="email" placeholder="registrar@abc.edu" required />
-            </label>
-            <label>
-              DID (optional)
-              <input name="did" placeholder="did:credshield:abc-university" />
-            </label>
-            <div class="form-actions">
-              <button type="submit" class="primary">Approve issuer</button>
-            </div>
-          </form>
-          <p id="issuerMessage" class="message"></p>
-        </article>
-
-        <article class="card surface-soft">
-          <div class="card-header">
+  <body class="vc-body">
+    <div class="vc-app-bg vc-root">
+      <header class="vc-appbar vc-no-print">
+        <div class="vc-appbar-inner">
+          <div class="vc-brand">
+            <div class="vc-brand-mark">CS</div>
             <div>
-              <span class="section-kicker">Directory</span>
-              <h2>Approved issuer list</h2>
+              <div class="vc-brand-name">CredShield</div>
+              <div class="vc-brand-sub">Issuer-side credential administration</div>
             </div>
           </div>
-          <p class="helper">Use this panel as the operational source of truth for who can issue credentials.</p>
-          <div id="issuerList" class="list"></div>
-        </article>
-      </section>
-
-      <section id="issue-form" class="card card-accent">
-        <span class="section-kicker">Step 2</span>
-        <h2>Issue a new credential</h2>
-        <p class="helper">Capture recipient details, generate the signed payload, anchor the proof, and produce a QR-enabled certificate.</p>
-        <form id="credentialForm" class="form-grid two-columns">
-          <label>
-            Approved issuer
-            <select name="issuerId" id="issuerSelect" required></select>
-          </label>
-          <label>
-            Institution name override
-            <input name="institutionName" placeholder="Leave blank to use issuer name" />
-          </label>
-          <label>
-            Student name
-            <input name="studentName" placeholder="Arun Kumar" required />
-          </label>
-          <label>
-            Student email
-            <input name="studentEmail" type="email" placeholder="arun@example.com" required />
-          </label>
-          <label>
-            Student ID
-            <input name="studentId" placeholder="22CSE1042" required />
-          </label>
-          <label>
-            Credential type
-            <input name="credentialType" placeholder="Bachelor of Technology" required />
-          </label>
-          <label>
-            Program
-            <input name="program" placeholder="Computer Science and Engineering" required />
-          </label>
-          <label>
-            Grade / result
-            <input name="grade" placeholder="First Class with Distinction" required />
-          </label>
-          <label>
-            Issue date
-            <input name="issueDate" type="date" />
-          </label>
-          <label>
-            Expiry date (optional)
-            <input name="expiresAt" type="date" />
-          </label>
-          <div class="form-actions full-width">
-            <button type="submit" class="primary">Issue credential</button>
-          </div>
-        </form>
-        <p id="credentialMessage" class="message"></p>
-        <div id="issueResult"></div>
-      </section>
-
-      <section class="card surface-soft">
-        <div class="card-header">
-          <div>
-            <span class="section-kicker">Step 3</span>
-            <h2>Issued credentials ledger</h2>
-          </div>
-          <a class="link-button secondary" href="/verify">Test verification workflow</a>
+          <nav class="vc-nav-actions">
+            <a class="vc-tab" href="/">Overview</a>
+            <a class="vc-tab is-active" href="/issuer">Issuer Portal</a>
+            <a class="vc-tab" href="/verify">Verifier Portal</a>
+            <a class="vc-tab" href="/demo-certificate">Certificate Generator</a>
+          </nav>
         </div>
-        <p class="helper">Review generated credentials, open the assets, or revoke a record directly from this list.</p>
-        <div id="credentialList" class="list"></div>
-      </section>
-    </main>
+      </header>
 
+      <main class="vc-shell vc-main vc-stack">
+        <section class="vc-hero">
+          <div class="vc-card vc-card-pad vc-stack">
+            <div class="vc-row"><span class="vc-pill vc-pill-blue">Issuer portal</span></div>
+            <h1 class="vc-hero-title">Manage trusted issuers and generate QR-enabled credentials.</h1>
+            <p class="vc-muted" style="margin:0; max-width:60ch; line-height:1.7;">
+              This workspace is for academic offices and certifying institutions. It handles issuer onboarding,
+              credential creation, signing, PDF generation, proof anchoring, and revocation management.
+            </p>
+            <div class="vc-row">
+              <a class="vc-btn vc-btn-primary" href="#issue-form">Issue a credential</a>
+              <a class="vc-btn vc-btn-secondary" href="/verify">Open verifier portal</a>
+            </div>
+          </div>
+          <aside class="vc-card vc-card-pad vc-stack">
+            <span class="vc-pill vc-pill-slate">Institution workflow</span>
+            <div class="vc-kpi-grid" style="grid-template-columns:minmax(0,1fr);">
+              <div class="vc-kpi"><div class="vc-kpi-value" id="issuerCount">0</div><div class="vc-kpi-label">approved issuers</div></div>
+              <div class="vc-kpi"><div class="vc-kpi-value" id="credentialCount">0</div><div class="vc-kpi-label">credentials issued</div></div>
+              <div class="vc-kpi"><div class="vc-kpi-value">PDF + QR</div><div class="vc-kpi-label">share-ready output</div></div>
+            </div>
+          </aside>
+        </section>
+
+        <section class="vc-kpi-grid">
+          <div class="vc-card vc-card-pad"><div class="vc-title-sm">Registry-backed issuance</div><div class="vc-muted" style="margin-top:0.35rem;">Only approved issuers should generate trusted credentials.</div></div>
+          <div class="vc-card vc-card-pad"><div class="vc-title-sm">Tamper-evident proof</div><div class="vc-muted" style="margin-top:0.35rem;">Every certificate is hashed, signed, and linked to a verification route.</div></div>
+          <div class="vc-card vc-card-pad"><div class="vc-title-sm">Revocation support</div><div class="vc-muted" style="margin-top:0.35rem;">Update credential trust instantly when a record is withdrawn.</div></div>
+        </section>
+
+        <section class="vc-grid-2">
+          <article class="vc-card vc-card-pad">
+            <div class="vc-section">
+              <div class="vc-section-head"><div class="vc-section-step">1</div><h2 class="vc-section-title">Approve a trusted issuer</h2></div>
+              <p class="vc-section-sub">Register a university, training institute, or certification body into the approved issuer directory.</p>
+            </div>
+            <form id="issuerForm" class="vc-form-grid">
+              <label class="vc-field"><span class="vc-label">Institution name</span><input class="vc-input" name="name" placeholder="ABC University" required /></label>
+              <label class="vc-field"><span class="vc-label">Issuer email</span><input class="vc-input" name="email" type="email" placeholder="registrar@abc.edu" required /></label>
+              <label class="vc-field" style="grid-column:1 / -1;"><span class="vc-label">DID (optional)</span><input class="vc-input" name="did" placeholder="did:credshield:abc-university" /></label>
+              <div class="vc-form-actions"><button type="submit" class="vc-btn vc-btn-primary">Approve issuer</button></div>
+            </form>
+            <p id="issuerMessage" class="vc-section-sub" style="margin-top:0.75rem;"></p>
+          </article>
+
+          <article class="vc-card vc-card-pad">
+            <div class="vc-section">
+              <div class="vc-section-head"><div class="vc-section-step">2</div><h2 class="vc-section-title">Approved issuer list</h2></div>
+              <p class="vc-section-sub">Use this panel as the source of truth for who can issue credentials.</p>
+            </div>
+            <div id="issuerList" class="vc-panel-list"></div>
+          </article>
+        </section>
+
+        <section id="issue-form" class="vc-card vc-card-pad">
+          <div class="vc-section">
+            <div class="vc-section-head"><div class="vc-section-step">3</div><h2 class="vc-section-title">Issue a new credential</h2></div>
+            <p class="vc-section-sub">Capture recipient details, generate the signed payload, anchor the proof, and produce a QR-enabled certificate.</p>
+          </div>
+          <form id="credentialForm" class="vc-form-grid">
+            <label class="vc-field"><span class="vc-label">Approved issuer</span><select class="vc-select" name="issuerId" id="issuerSelect" required></select></label>
+            <label class="vc-field"><span class="vc-label">Institution name override</span><input class="vc-input" name="institutionName" placeholder="Leave blank to use issuer name" /></label>
+            <label class="vc-field"><span class="vc-label">Student name</span><input class="vc-input" name="studentName" placeholder="Arun Kumar" required /></label>
+            <label class="vc-field"><span class="vc-label">Student email</span><input class="vc-input" name="studentEmail" type="email" placeholder="arun@example.com" required /></label>
+            <label class="vc-field"><span class="vc-label">Student ID</span><input class="vc-input" name="studentId" placeholder="22CSE1042" required /></label>
+            <label class="vc-field"><span class="vc-label">Credential type</span><input class="vc-input" name="credentialType" placeholder="Bachelor of Technology" required /></label>
+            <label class="vc-field"><span class="vc-label">Program</span><input class="vc-input" name="program" placeholder="Computer Science and Engineering" required /></label>
+            <label class="vc-field"><span class="vc-label">Grade / result</span><input class="vc-input" name="grade" placeholder="First Class with Distinction" required /></label>
+            <label class="vc-field"><span class="vc-label">Issue date</span><input class="vc-input" name="issueDate" type="date" /></label>
+            <label class="vc-field"><span class="vc-label">Expiry date (optional)</span><input class="vc-input" name="expiresAt" type="date" /></label>
+            <div class="vc-form-actions"><button type="submit" class="vc-btn vc-btn-primary">Issue credential</button></div>
+          </form>
+          <p id="credentialMessage" class="vc-section-sub" style="margin-top:0.75rem;"></p>
+          <div id="issueResult"></div>
+        </section>
+
+        <section class="vc-card vc-card-pad">
+          <div class="vc-toolbar" style="margin-bottom:1rem;">
+            <div>
+              <div class="vc-section-head"><div class="vc-section-step">4</div><h2 class="vc-section-title">Issued credentials ledger</h2></div>
+              <p class="vc-section-sub">Review generated credentials, open the assets, or revoke a record directly from this list.</p>
+            </div>
+            <a class="vc-btn vc-btn-secondary" href="/verify">Open verifier portal</a>
+          </div>
+          <div id="credentialList" class="vc-panel-list"></div>
+        </section>
+      </main>
+    </div>
     <script src="/issuer.js"></script>
   </body>
 </html>

@@ -4,14 +4,14 @@ const state = {
 };
 
 const statusTone = {
-  VERIFIED: 'good',
-  FAILED: 'bad',
-  REVOKED: 'bad',
-  TAMPERED: 'bad',
-  EXPIRED: 'warn',
-  UNKNOWN_ISSUER: 'warn',
-  active: 'good',
-  revoked: 'bad',
+  VERIFIED: 'green',
+  FAILED: 'red',
+  REVOKED: 'amber',
+  TAMPERED: 'red',
+  EXPIRED: 'amber',
+  UNKNOWN_ISSUER: 'slate',
+  active: 'green',
+  revoked: 'red',
 };
 
 function byId(id) {
@@ -38,26 +38,57 @@ async function api(path, options = {}) {
 }
 
 function badge(status) {
-  const tone = statusTone[status] || 'warn';
-  return `<span class="status ${tone}">${escapeHtml(status)}</span>`;
+  const tone = statusTone[status] || 'slate';
+  return `<span class="vc-pill vc-pill-${tone}"><span class="vc-pill-dot"></span>${escapeHtml(status)}</span>`;
+}
+
+function verdictMeta(status) {
+  if (status === 'VERIFIED') {
+    return {
+      cls: 'is-verified',
+      icon: '✓',
+      title: 'Credential verified',
+      sub: 'The issuer, hash, signature, and current status all passed validation.',
+    };
+  }
+  if (status === 'REVOKED' || status === 'EXPIRED') {
+    return {
+      cls: 'is-revoked',
+      icon: '!',
+      title: status === 'REVOKED' ? 'Credential revoked' : 'Credential expired',
+      sub: status === 'REVOKED'
+        ? 'This credential was issued correctly but is no longer active.'
+        : 'This credential has passed its validity period.',
+    };
+  }
+  return {
+    cls: 'is-tampered',
+    icon: '×',
+    title: status === 'UNKNOWN_ISSUER' ? 'Issuer not recognized' : 'Credential failed verification',
+    sub: status === 'UNKNOWN_ISSUER'
+      ? 'The credential could not be matched to an approved issuer.'
+      : 'The submitted data does not match the trusted record or signature.',
+  };
 }
 
 function credentialLink(item) {
   return `
-    <div class="list-item">
-      <div class="card-header">
-        <strong>${escapeHtml(item.payload.studentName)}</strong>
+    <div class="vc-item">
+      <div class="vc-item-head">
+        <div>
+          <div class="vc-item-title">${escapeHtml(item.payload.studentName)}</div>
+          <div class="vc-muted" style="margin-top:0.2rem;">${escapeHtml(item.payload.credentialType)} • ${escapeHtml(item.payload.program)}</div>
+        </div>
         ${badge(item.status)}
       </div>
-      <div>${escapeHtml(item.payload.credentialType)} • ${escapeHtml(item.payload.program)}</div>
-      <div class="meta-row">
+      <div class="vc-meta-line">
         <span>${escapeHtml(item.id)}</span>
         <span>${escapeHtml(item.payload.institutionName)}</span>
       </div>
-      <div class="links">
-        <a href="/verify?id=${encodeURIComponent(item.id)}">Verify</a>
-        ${item.pdfPath ? `<a href="${item.pdfPath}" target="_blank">PDF</a>` : ''}
-        ${item.qrPath ? `<a href="${item.qrPath}" target="_blank">QR</a>` : ''}
+      <div class="vc-link-row">
+        <a class="vc-text-link" href="/verify?id=${encodeURIComponent(item.id)}">Verify</a>
+        ${item.pdfPath ? `<a class="vc-text-link" href="${item.pdfPath}" target="_blank">PDF</a>` : ''}
+        ${item.qrPath ? `<a class="vc-text-link" href="${item.qrPath}" target="_blank">QR</a>` : ''}
       </div>
     </div>
   `;
@@ -65,48 +96,71 @@ function credentialLink(item) {
 
 function renderCredentials() {
   byId('credentialCount').textContent = state.credentials.length;
+  if (!state.credentials.length) {
+    byId('credentialList').innerHTML = `
+      <div class="vc-empty">
+        <div class="vc-empty-title">No credentials available</div>
+        <div class="vc-empty-sub">Generate or issue a credential first to use the verification workflow.</div>
+      </div>
+    `;
+    return;
+  }
   byId('credentialList').innerHTML = state.credentials.map(credentialLink).join('');
 }
 
 function renderVerification(result, editedMode = false) {
+  const meta = verdictMeta(result.status);
+  const sourceCredential = result.credential || result.canonicalCredential;
+  const payload = sourceCredential?.payload;
   const checks = Object.entries(result.checks)
     .map(([key, ok]) => `
-      <div class="check">
-        <span>${escapeHtml(key)}</span>
-        ${badge(ok ? 'VERIFIED' : 'FAILED')}
+      <div class="vc-item" style="padding:0.75rem 1rem;">
+        <div class="vc-item-head" style="margin-bottom:0;">
+          <div class="vc-item-title" style="font-size:0.875rem; text-transform:capitalize;">${escapeHtml(key)}</div>
+          ${badge(ok ? 'VERIFIED' : 'FAILED')}
+        </div>
       </div>
     `)
     .join('');
 
   byId('verifyResult').innerHTML = `
-    <div class="result-card">
-      <div class="result-grid">
+    <div class="vc-stack vc-animate-pop">
+      <div class="vc-verdict ${meta.cls}">
+        <div class="vc-verdict-icon">${meta.icon}</div>
         <div>
-          <div class="card-header">
-            <h3>${editedMode ? 'Edited payload result' : escapeHtml(result.credential.payload.studentName)}</h3>
+          <h3 class="vc-verdict-title">${meta.title}</h3>
+          <p class="vc-verdict-sub">${meta.sub}</p>
+        </div>
+      </div>
+
+      <div class="vc-split">
+        <div class="vc-card vc-card-pad">
+          <div class="vc-toolbar" style="margin-bottom:0.75rem;">
+            <h3 class="vc-title-md">${editedMode ? 'Edited payload result' : escapeHtml(payload?.studentName || 'Credential details')}</h3>
             ${badge(result.status)}
           </div>
-          <div class="kv"><div class="key">Credential ID</div><div>${escapeHtml(result.credentialId || result.credential.id)}</div></div>
-          <div class="kv"><div class="key">Institution</div><div>${escapeHtml(result.credential?.payload?.institutionName || result.canonicalCredential?.payload?.institutionName || '—')}</div></div>
-          <div class="kv"><div class="key">Credential</div><div>${escapeHtml(result.credential?.payload?.credentialType || result.canonicalCredential?.payload?.credentialType || '—')}</div></div>
-          <div class="kv"><div class="key">Program</div><div>${escapeHtml(result.credential?.payload?.program || result.canonicalCredential?.payload?.program || '—')}</div></div>
-          <div class="kv"><div class="key">Trust score</div><div>${result.trustScore}/4</div></div>
-          <div class="kv"><div class="key">Anchor tx</div><div>${escapeHtml(result.anchor?.txHash || '—')}</div></div>
-          <div class="kv"><div class="key">Hash checked</div><div>${escapeHtml(result.hashToCheck || result.credential?.hash || '—')}</div></div>
-          <div class="links">
-            ${result.credential?.pdfPath ? `<a href="${result.credential.pdfPath}" target="_blank">Open PDF</a>` : ''}
-            ${result.credential?.qrPath ? `<a href="${result.credential.qrPath}" target="_blank">Open QR</a>` : ''}
+          <dl class="vc-defs">
+            <div><dt>Credential ID</dt><dd>${escapeHtml(result.credentialId || sourceCredential?.id || '—')}</dd></div>
+            <div><dt>Institution</dt><dd>${escapeHtml(payload?.institutionName || '—')}</dd></div>
+            <div><dt>Credential</dt><dd>${escapeHtml(payload?.credentialType || '—')}</dd></div>
+            <div><dt>Program</dt><dd>${escapeHtml(payload?.program || '—')}</dd></div>
+            <div><dt>Trust score</dt><dd>${result.trustScore}/4</dd></div>
+            <div><dt>Anchor transaction</dt><dd class="vc-hash">${escapeHtml(result.anchor?.txHash || '—')}</dd></div>
+            <div><dt>Hash checked</dt><dd class="vc-hash">${escapeHtml(result.hashToCheck || sourceCredential?.hash || '—')}</dd></div>
+          </dl>
+          <div class="vc-link-row">
+            ${sourceCredential?.pdfPath ? `<a class="vc-btn vc-btn-secondary" href="${sourceCredential.pdfPath}" target="_blank">Open PDF</a>` : ''}
+            ${sourceCredential?.qrPath ? `<a class="vc-btn vc-btn-secondary" href="${sourceCredential.qrPath}" target="_blank">Open QR</a>` : ''}
           </div>
         </div>
-        <div>
-          <h3>Verification checks</h3>
-          <div class="checks">${checks}</div>
+        <div class="vc-card vc-card-pad">
+          <h3 class="vc-title-md">Verification checks</h3>
+          <div class="vc-panel-list" style="margin-top:0.75rem;">${checks}</div>
         </div>
       </div>
     </div>
   `;
 
-  const payload = result.credential?.payload || result.canonicalCredential?.payload;
   if (payload) byId('tamperPayload').value = JSON.stringify(payload, null, 2);
   state.currentVerification = result;
 }
@@ -132,7 +186,7 @@ async function bootstrap() {
     try {
       await verifyById(credentialId);
     } catch (error) {
-      byId('verifyResult').innerHTML = `<p class="message">${escapeHtml(error.message)}</p>`;
+      byId('verifyResult').innerHTML = `<div class="vc-alert vc-alert-danger">${escapeHtml(error.message)}</div>`;
     }
   });
 
@@ -147,7 +201,7 @@ async function bootstrap() {
       });
       renderVerification(result, true);
     } catch (error) {
-      byId('verifyResult').innerHTML = `<p class="message">${escapeHtml(error.message)}</p>`;
+      byId('verifyResult').innerHTML = `<div class="vc-alert vc-alert-danger">${escapeHtml(error.message)}</div>`;
     }
   });
 
@@ -159,12 +213,12 @@ async function bootstrap() {
     try {
       await verifyById(id);
     } catch (error) {
-      byId('verifyResult').innerHTML = `<p class="message">${escapeHtml(error.message)}</p>`;
+      byId('verifyResult').innerHTML = `<div class="vc-alert vc-alert-danger">${escapeHtml(error.message)}</div>`;
     }
   }
 }
 
 bootstrap().catch((error) => {
   console.error(error);
-  byId('verifyResult').innerHTML = `<p class="message">${escapeHtml(error.message)}</p>`;
+  byId('verifyResult').innerHTML = `<div class="vc-alert vc-alert-danger">${escapeHtml(error.message)}</div>`;
 });

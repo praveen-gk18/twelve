@@ -6,198 +6,141 @@
     <title>CredShield — Trusted Digital Credential Exchange</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
-  <body>
-    <div class="top-strip">
-      <div class="top-strip-inner">
-        <span><strong>CredShield Trust Network</strong> • DigiLocker-inspired professional credential experience</span>
-        <span>Blockchain-backed verification • QR-first sharing • Demo-ready MVP</span>
-      </div>
+  <body class="vc-body">
+    <div class="vc-app-bg vc-root">
+      <header class="vc-appbar vc-no-print">
+        <div class="vc-appbar-inner">
+          <div class="vc-brand">
+            <div class="vc-brand-mark">CS</div>
+            <div>
+              <div class="vc-brand-name">CredShield</div>
+              <div class="vc-brand-sub">Trusted digital credential exchange</div>
+            </div>
+          </div>
+          <nav class="vc-nav-actions">
+            <a class="vc-tab is-active" href="/">Overview</a>
+            <a class="vc-tab" href="/issuer">Issuer Portal</a>
+            <a class="vc-tab" href="/verify">Verifier Portal</a>
+            <a class="vc-tab" href="/demo-certificate">Certificate Generator</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="vc-shell vc-main vc-stack">
+        <section class="vc-hero">
+          <div class="vc-card vc-card-pad vc-stack">
+            <div class="vc-row">
+              <span class="vc-pill vc-pill-blue">Credential trust infrastructure</span>
+            </div>
+            <div class="vc-stack" style="gap:0.75rem">
+              <h1 class="vc-hero-title">Issue, share, and verify digital credentials with clarity.</h1>
+              <p class="vc-muted" style="margin:0; max-width:60ch; font-size:0.95rem; line-height:1.7;">
+                CredShield gives institutions a structured way to issue secure certificates, lets recipients share them using QR links,
+                and helps recruiters or universities verify authenticity in seconds.
+              </p>
+            </div>
+            <div class="vc-row">
+              <a class="vc-btn vc-btn-primary" href="/issuer">Launch issuer portal</a>
+              <a class="vc-btn vc-btn-secondary" href="/verify">Open verifier portal</a>
+              <a class="vc-btn vc-btn-secondary" href="/demo-certificate">Open certificate generator</a>
+            </div>
+            <div class="vc-grid-3">
+              <div class="vc-note-box">
+                <div class="vc-title-sm">Visible trust</div>
+                <div class="vc-muted" style="margin-top:0.35rem;">Professional certificate layouts, unique IDs, issuer details, and scannable QR codes.</div>
+              </div>
+              <div class="vc-note-box">
+                <div class="vc-title-sm">Cryptographic trust</div>
+                <div class="vc-muted" style="margin-top:0.35rem;">Hashes, signatures, and anchor records make unauthorized changes detectable.</div>
+              </div>
+              <div class="vc-note-box">
+                <div class="vc-title-sm">Authority trust</div>
+                <div class="vc-muted" style="margin-top:0.35rem;">Only approved issuers can create credentials, with live status and revocation checks.</div>
+              </div>
+            </div>
+          </div>
+
+          <aside class="vc-card vc-card-pad vc-stack">
+            <span class="vc-pill vc-pill-slate">Platform snapshot</span>
+            <div class="vc-kpi-grid" style="grid-template-columns:minmax(0,1fr);">
+              <div class="vc-kpi">
+                <div class="vc-kpi-value">2</div>
+                <div class="vc-kpi-label">specialized portals</div>
+              </div>
+              <div class="vc-kpi">
+                <div class="vc-kpi-value">QR</div>
+                <div class="vc-kpi-label">verification built in</div>
+              </div>
+              <div class="vc-kpi">
+                <div class="vc-kpi-value">PDF</div>
+                <div class="vc-kpi-label">share-ready output</div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section class="vc-kpi-grid">
+          <div class="vc-card vc-card-pad">
+            <div class="vc-section-sub">Experience</div>
+            <div class="vc-title-md">Structured</div>
+            <p class="vc-muted" style="margin:0.5rem 0 0;">A clear portal experience with focused sections and consistent navigation.</p>
+          </div>
+          <div class="vc-card vc-card-pad">
+            <div class="vc-section-sub">Security model</div>
+            <div class="vc-title-md">3 layers</div>
+            <p class="vc-muted" style="margin:0.5rem 0 0;">Visual trust, cryptographic proof, and issuer authority controls.</p>
+          </div>
+          <div class="vc-card vc-card-pad">
+            <div class="vc-section-sub">Distribution</div>
+            <div class="vc-title-md">QR + PDF</div>
+            <p class="vc-muted" style="margin:0.5rem 0 0;">Useful for hiring, admissions, sharing, and printed certificates.</p>
+          </div>
+        </section>
+
+        <section class="vc-grid-2">
+          <article class="vc-card vc-card-pad vc-stack">
+            <div class="vc-row"><span class="vc-pill vc-pill-dark">Issuer workspace</span></div>
+            <h2 class="vc-title-lg">Institution control panel</h2>
+            <p class="vc-muted" style="margin:0;">For universities, training centers, and certifying bodies to onboard issuers, issue credentials, manage certificate status, and generate certificate assets.</p>
+            <ul class="vc-muted" style="margin:0; padding-left:1.1rem; display:grid; gap:0.45rem;">
+              <li>Register and approve issuers in the trusted directory</li>
+              <li>Issue credentials with unique IDs, metadata, and signatures</li>
+              <li>Generate downloadable PDF certificates with QR verification</li>
+              <li>Revoke or suspend records when needed</li>
+            </ul>
+            <div><a class="vc-btn vc-btn-primary" href="/issuer">Open issuer portal</a></div>
+          </article>
+
+          <article class="vc-card vc-card-pad vc-stack">
+            <div class="vc-row"><span class="vc-pill vc-pill-blue">Verifier workspace</span></div>
+            <h2 class="vc-title-lg">Recruiter and verifier dashboard</h2>
+            <p class="vc-muted" style="margin:0;">For hiring teams, universities, and auditors who need instant authenticity checks with a clean verification experience.</p>
+            <ul class="vc-muted" style="margin:0; padding-left:1.1rem; display:grid; gap:0.45rem;">
+              <li>Verify directly from credential ID or QR-generated link</li>
+              <li>Inspect trust score across issuer, hash, signature, and status</li>
+              <li>Open linked QR and PDF assets from one screen</li>
+              <li>Use the tamper tester to show why altered records fail</li>
+            </ul>
+            <div><a class="vc-btn vc-btn-secondary" href="/verify">Open verifier portal</a></div>
+          </article>
+        </section>
+
+        <section class="vc-card vc-card-pad vc-stack">
+          <div>
+            <div class="vc-section-head">
+              <div class="vc-section-step">4</div>
+              <h2 class="vc-section-title">How the credential lifecycle works</h2>
+            </div>
+            <p class="vc-section-sub">The product separates issuance and verification into two focused experiences while keeping the data flow straightforward.</p>
+          </div>
+          <div class="vc-grid-2">
+            <div class="vc-note-box"><strong>1. Institution approves issuer</strong><div class="vc-muted" style="margin-top:0.35rem;">The trusted registry ensures only authorized organizations can create credentials.</div></div>
+            <div class="vc-note-box"><strong>2. Credential is created and signed</strong><div class="vc-muted" style="margin-top:0.35rem;">Payload data is normalized, hashed, and signed before a proof record is anchored.</div></div>
+            <div class="vc-note-box"><strong>3. QR and PDF are generated</strong><div class="vc-muted" style="margin-top:0.35rem;">The holder receives a shareable certificate with a direct link into the verifier portal.</div></div>
+            <div class="vc-note-box"><strong>4. Verifier checks live trust</strong><div class="vc-muted" style="margin-top:0.35rem;">Status, issuer approval, signature validity, and hash integrity determine authenticity.</div></div>
+          </div>
+        </section>
+      </main>
     </div>
-
-    <div class="main-nav-wrap">
-      <nav class="main-nav">
-        <a class="brand" href="/">
-          <span class="brand-mark">CS</span>
-          <span class="brand-copy">
-            <span class="brand-title">CredShield</span>
-            <span class="brand-subtitle">Verifiable credentials for institutions and recruiters</span>
-          </span>
-        </a>
-        <div class="nav-links">
-          <a class="nav-link active" href="/">Overview</a>
-          <a class="nav-link" href="/issuer">Issuer Portal</a>
-          <a class="nav-link" href="/verify">Verifier Portal</a>
-          <a class="nav-link" href="/demo-certificate">Demo Generator</a>
-        </div>
-      </nav>
-    </div>
-
-    <header class="hero">
-      <section class="hero-panel">
-        <p class="eyebrow">Trusted Credential Infrastructure</p>
-        <h1>Issue, share, and verify academic credentials with a government-grade interface.</h1>
-        <p class="subtitle">
-          CredShield is a professional digital credential workspace inspired by modern public-service portals.
-          It helps institutions issue secure certificates, gives candidates instant QR-based sharing, and lets recruiters
-          verify authenticity in seconds.
-        </p>
-        <div class="cta-row">
-          <a class="link-button primary" href="/issuer">Launch issuer portal</a>
-          <a class="link-button secondary" href="/verify">Open verifier portal</a>
-          <a class="link-button ghost" href="/demo-certificate">Generate demo certificate</a>
-        </div>
-        <div class="hero-bullets">
-          <div>
-            <strong>Visible trust</strong>
-            <span>Professional certificate layouts, IDs, issuer details, and scannable QR codes.</span>
-          </div>
-          <div>
-            <strong>Cryptographic trust</strong>
-            <span>Hashes, signatures, and anchor records make every change tamper-evident.</span>
-          </div>
-          <div>
-            <strong>Authority trust</strong>
-            <span>Only approved issuers can issue credentials, with live revocation and status checks.</span>
-          </div>
-        </div>
-      </section>
-
-      <aside class="hero-card">
-        <div class="hero-badge">Platform Snapshot</div>
-        <div class="metric-grid">
-          <div class="metric">
-            <strong>2</strong>
-            <span>specialized portals</span>
-            <small>One for issuing, one for verification.</small>
-          </div>
-          <div class="metric">
-            <strong>QR</strong>
-            <span>verification built in</span>
-            <small>Every generated credential can open verification instantly.</small>
-          </div>
-          <div class="metric">
-            <strong>MVP</strong>
-            <span>deployment ready</span>
-            <small>Prepared for GitHub + Render and ready for live demos.</small>
-          </div>
-        </div>
-      </aside>
-    </header>
-
-    <main>
-      <section class="stats-band">
-        <div class="stat-tile">
-          <div class="stat-label">Experience</div>
-          <div class="stat-value">Professional</div>
-          <div class="stat-desc">Government-portal inspired look with richer layout and UI hierarchy.</div>
-        </div>
-        <div class="stat-tile">
-          <div class="stat-label">Security model</div>
-          <div class="stat-value">3 Layers</div>
-          <div class="stat-desc">Visual trust, cryptographic proof, and issuer authority control.</div>
-        </div>
-        <div class="stat-tile">
-          <div class="stat-label">Distribution</div>
-          <div class="stat-value">QR + PDF</div>
-          <div class="stat-desc">Suitable for recruiter sharing, email forwarding, and printed certificates.</div>
-        </div>
-        <div class="stat-tile">
-          <div class="stat-label">Hackathon readiness</div>
-          <div class="stat-value">Demo Ready</div>
-          <div class="stat-desc">Use the dedicated demo generator when you need a quick certificate sample.</div>
-        </div>
-      </section>
-
-      <section class="grid two">
-        <article class="card portal-card card-accent">
-          <span class="section-kicker">Issuer workspace</span>
-          <div class="portal-icon">🏛️</div>
-          <h2>Institution control panel</h2>
-          <p class="section-copy">
-            Designed for universities, training institutes, and certification bodies to onboard issuers,
-            issue credentials, manage record status, and generate polished certificate assets.
-          </p>
-          <ul class="feature-list">
-            <li>Register and approve issuers in the trusted directory</li>
-            <li>Issue credentials with unique IDs, metadata, and digital signatures</li>
-            <li>Generate downloadable PDF certificates with QR verification</li>
-            <li>Revoke or suspend records when needed</li>
-          </ul>
-          <div class="cta-row">
-            <a class="link-button primary" href="/issuer">Open issuer portal</a>
-          </div>
-        </article>
-
-        <article class="card portal-card card-accent surface-soft">
-          <span class="section-kicker">Verifier workspace</span>
-          <div class="portal-icon">🔎</div>
-          <h2>Recruiter and verifier dashboard</h2>
-          <p class="section-copy">
-            Built for hiring teams, universities, and auditors who need instant authenticity checks with a clean,
-            report-like verification experience.
-          </p>
-          <ul class="feature-list">
-            <li>Verify directly from credential ID or QR-generated link</li>
-            <li>Inspect trust score across issuer, hash, signature, and active status</li>
-            <li>Open linked QR and PDF assets from one screen</li>
-            <li>Use the tamper tester to demonstrate why forged edits fail</li>
-          </ul>
-          <div class="cta-row">
-            <a class="link-button secondary" href="/verify">Open verifier portal</a>
-          </div>
-        </article>
-      </section>
-
-      <section class="card architecture-card">
-        <span class="section-kicker">System flow</span>
-        <h2>How the credential lifecycle works</h2>
-        <p class="section-copy">
-          The product experience is intentionally split into a professional issuance flow and a focused verification flow,
-          similar to how public-sector document systems separate administrative actions from citizen access.
-        </p>
-        <div class="mini-architecture">
-          <div class="arch-step">
-            <strong>1. Institution approves issuer</strong>
-            <span>The trusted registry ensures only authorized organizations can create credentials.</span>
-          </div>
-          <div class="arch-arrow">→</div>
-          <div class="arch-step">
-            <strong>2. Credential is created and signed</strong>
-            <span>Payload data is normalized, hashed, and signed before a proof record is anchored.</span>
-          </div>
-          <div class="arch-arrow">→</div>
-          <div class="arch-step">
-            <strong>3. QR and PDF are generated</strong>
-            <span>The holder receives a shareable certificate with a direct link into the verifier portal.</span>
-          </div>
-          <div class="arch-arrow">→</div>
-          <div class="arch-step">
-            <strong>4. Verifier checks live trust</strong>
-            <span>Status, issuer approval, signature validity, and hash integrity determine authenticity.</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="grid three">
-        <article class="card">
-          <span class="section-kicker">Presentation mode</span>
-          <h3>Demo certificate generator</h3>
-          <p>Create a polished sample certificate without first walking through the full issuer workflow.</p>
-          <div class="cta-row">
-            <a class="link-button secondary" href="/demo-certificate">Open demo generator</a>
-          </div>
-        </article>
-        <article class="card">
-          <span class="section-kicker">Deployment</span>
-          <h3>GitHub + Render ready</h3>
-          <p>The project already includes deployment metadata and can be hosted publicly for review or judging.</p>
-        </article>
-        <article class="card">
-          <span class="section-kicker">Judge talking point</span>
-          <h3>Why it stands out</h3>
-          <p>It combines real verification logic with a portal experience that feels closer to a production service.</p>
-        </article>
-      </section>
-    </main>
   </body>
 </html>

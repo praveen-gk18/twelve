@@ -1,6 +1,6 @@
-# CredShield MVP
+# CredShield
 
-A **GitHub-ready hackathon prototype** for a verifiable digital certificate network inspired by **Indian currency-note anti-counterfeit design**.
+A **GitHub-ready prototype** for a verifiable digital certificate network inspired by **Indian currency-note anti-counterfeit design**.
 
 ## Core concept
 
@@ -96,7 +96,7 @@ If the data folder is empty, the app seeds:
 - `GET /api/verify/:credentialId`
 - `POST /api/verify` for tamper testing with a custom payload
 
-## Demo flow for judges
+## Example walkthrough
 
 1. Open `/issuer`
 2. Approve an issuer or use seeded `ABC University`
@@ -109,7 +109,7 @@ If the data folder is empty, the app seeds:
 
 ## Mock-chain vs real chain
 
-The running MVP uses a local **mock blockchain anchor** so the demo works instantly without wallet setup.
+The running app uses a local **mock blockchain anchor** so the workflow works instantly without wallet setup.
 
 The real EVM smart contracts are included in `/contracts` for deployment to Polygon Amoy or any EVM network.
 
@@ -144,7 +144,7 @@ This repo now includes:
 7. Use `/api/health` as the health check path if Render asks.
 
 ### Important deployment note
-This MVP uses local JSON files under `data/` and generated QR/PDF files under `public/generated/`.
+This app uses local JSON files under `data/` and generated QR/PDF files under `public/generated/`.
 That is perfect for a **demo**, but on a cloud restart or redeploy, data may reset unless you add persistent storage or a real database/object store.
 
 For a more durable deployment later, replace local storage with:

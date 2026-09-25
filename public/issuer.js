@@ -4,12 +4,12 @@ const state = {
 };
 
 const statusTone = {
-  VERIFIED: 'good',
-  FAILED: 'bad',
-  approved: 'good',
-  suspended: 'warn',
-  active: 'good',
-  revoked: 'bad',
+  VERIFIED: 'green',
+  FAILED: 'red',
+  approved: 'green',
+  suspended: 'amber',
+  active: 'green',
+  revoked: 'red',
 };
 
 function byId(id) {
@@ -36,8 +36,8 @@ async function api(path, options = {}) {
 }
 
 function badge(status) {
-  const tone = statusTone[status] || 'warn';
-  return `<span class="status ${tone}">${escapeHtml(status)}</span>`;
+  const tone = statusTone[status] || 'slate';
+  return `<span class="vc-pill vc-pill-${tone}"><span class="vc-pill-dot"></span>${escapeHtml(status)}</span>`;
 }
 
 function renderCounts() {
@@ -53,18 +53,28 @@ function renderIssuerSelect() {
 }
 
 function renderIssuers() {
+  if (!state.issuers.length) {
+    byId('issuerList').innerHTML = `
+      <div class="vc-empty">
+        <div class="vc-empty-title">No issuers yet</div>
+        <div class="vc-empty-sub">Approve an institution to begin issuing credentials.</div>
+      </div>
+    `;
+    return;
+  }
+
   byId('issuerList').innerHTML = state.issuers
     .map((issuer) => `
-      <div class="list-item">
-        <div class="card-header">
-          <strong>${escapeHtml(issuer.name)}</strong>
+      <div class="vc-item">
+        <div class="vc-item-head">
+          <div class="vc-item-title">${escapeHtml(issuer.name)}</div>
           ${badge(issuer.status)}
         </div>
-        <div class="meta-row">
+        <div class="vc-meta-line">
           <span>${escapeHtml(issuer.email)}</span>
           <span>${escapeHtml(issuer.did)}</span>
         </div>
-        ${issuer.status === 'approved' ? `<button class="secondary" data-suspend="${issuer.id}">Suspend</button>` : ''}
+        ${issuer.status === 'approved' ? `<div class="vc-action-row"><button class="vc-btn vc-btn-secondary vc-btn-sm" data-suspend="${issuer.id}">Suspend</button></div>` : ''}
       </div>
     `)
     .join('');
@@ -79,28 +89,40 @@ function renderIssuers() {
 
 function credentialCard(item) {
   return `
-    <div class="list-item">
-      <div class="card-header">
-        <strong>${escapeHtml(item.payload.studentName)}</strong>
+    <div class="vc-item">
+      <div class="vc-item-head">
+        <div>
+          <div class="vc-item-title">${escapeHtml(item.payload.studentName)}</div>
+          <div class="vc-muted" style="margin-top:0.2rem;">${escapeHtml(item.payload.credentialType)} • ${escapeHtml(item.payload.program)}</div>
+        </div>
         ${badge(item.status)}
       </div>
-      <div>${escapeHtml(item.payload.credentialType)} • ${escapeHtml(item.payload.program)}</div>
-      <div class="meta-row">
+      <div class="vc-meta-line">
         <span>${escapeHtml(item.id)}</span>
         <span>${escapeHtml(item.payload.institutionName)}</span>
         <span>${escapeHtml(item.payload.issueDate)}</span>
       </div>
-      <div class="links">
-        <a href="${item.verifyUrl || `/verify?id=${encodeURIComponent(item.id)}`}">Verify</a>
-        ${item.pdfPath ? `<a href="${item.pdfPath}" target="_blank">PDF</a>` : ''}
-        ${item.qrPath ? `<a href="${item.qrPath}" target="_blank">QR</a>` : ''}
+      <div class="vc-link-row">
+        <a class="vc-text-link" href="${item.verifyUrl || `/verify?id=${encodeURIComponent(item.id)}`}">Verify</a>
+        ${item.pdfPath ? `<a class="vc-text-link" href="${item.pdfPath}" target="_blank">PDF</a>` : ''}
+        ${item.qrPath ? `<a class="vc-text-link" href="${item.qrPath}" target="_blank">QR</a>` : ''}
       </div>
-      ${item.status !== 'revoked' ? `<div class="links"><button class="secondary" data-revoke="${item.id}">Revoke</button></div>` : ''}
+      ${item.status !== 'revoked' ? `<div class="vc-action-row"><button class="vc-btn vc-btn-danger vc-btn-sm" data-revoke="${item.id}">Revoke</button></div>` : ''}
     </div>
   `;
 }
 
 function renderCredentials() {
+  if (!state.credentials.length) {
+    byId('credentialList').innerHTML = `
+      <div class="vc-empty">
+        <div class="vc-empty-title">No credentials issued</div>
+        <div class="vc-empty-sub">Issue a credential to see it listed here with QR and verification links.</div>
+      </div>
+    `;
+    return;
+  }
+
   byId('credentialList').innerHTML = state.credentials.map(credentialCard).join('');
   document.querySelectorAll('[data-revoke]').forEach((button) => {
     button.addEventListener('click', async () => {
@@ -116,18 +138,21 @@ function renderCredentials() {
 function renderIssueResult(data) {
   const { credential } = data;
   byId('issueResult').innerHTML = `
-    <div class="result-card">
-      <div class="card-header">
-        <h3>Credential issued: ${escapeHtml(credential.id)}</h3>
+    <div class="vc-card vc-card-pad vc-animate-pop" style="margin-top:1rem;">
+      <div class="vc-toolbar">
+        <h3 class="vc-title-md">Credential issued</h3>
         ${badge('VERIFIED')}
       </div>
-      <div class="kv"><div class="key">Student</div><div>${escapeHtml(credential.payload.studentName)}</div></div>
-      <div class="kv"><div class="key">Anchor tx</div><div>${escapeHtml(credential.anchor.txHash)}</div></div>
-      <div class="kv"><div class="key">Hash</div><div>${escapeHtml(credential.hash)}</div></div>
-      <div class="links">
-        <a href="${credential.verifyUrl}">Open verifier portal</a>
-        <a href="${credential.pdfPath}" target="_blank">Download PDF</a>
-        <a href="${credential.qrPath}" target="_blank">Open QR</a>
+      <dl class="vc-defs">
+        <div><dt>Credential ID</dt><dd>${escapeHtml(credential.id)}</dd></div>
+        <div><dt>Student</dt><dd>${escapeHtml(credential.payload.studentName)}</dd></div>
+        <div><dt>Anchor transaction</dt><dd class="vc-hash">${escapeHtml(credential.anchor.txHash)}</dd></div>
+        <div><dt>Hash</dt><dd class="vc-hash">${escapeHtml(credential.hash)}</dd></div>
+      </dl>
+      <div class="vc-link-row">
+        <a class="vc-btn vc-btn-primary" href="${credential.verifyUrl}">Open verifier portal</a>
+        <a class="vc-btn vc-btn-secondary" href="${credential.pdfPath}" target="_blank">Download PDF</a>
+        <a class="vc-btn vc-btn-secondary" href="${credential.qrPath}" target="_blank">Open QR</a>
       </div>
     </div>
   `;
