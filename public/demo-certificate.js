@@ -39,12 +39,7 @@ function renderDemoResult(data) {
                 <h3 class="vc-cert-institution">${escapeHtml(credential.payload.institutionName)}</h3>
                 <p class="vc-cert-tagline">Verified digital credential</p>
               </div>
-              <svg class="vc-seal" width="72" height="72" viewBox="0 0 72 72" aria-hidden="true">
-                <circle cx="36" cy="36" r="33" fill="#0f172a"></circle>
-                <circle cx="36" cy="36" r="25" fill="none" stroke="#ffffff" stroke-width="2"></circle>
-                <text x="36" y="31" text-anchor="middle" fill="#ffffff" font-size="8" font-family="Arial">CRED</text>
-                <text x="36" y="43" text-anchor="middle" fill="#ffffff" font-size="8" font-family="Arial">SHIELD</text>
-              </svg>
+              <img class="vc-seal" src="/pocket-logo.svg" width="72" height="72" alt="POCKET logo" />
             </div>
 
             <div class="vc-cert-body">
