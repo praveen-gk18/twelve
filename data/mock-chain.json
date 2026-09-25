@@ -1,0 +1,13 @@
+[
+  {
+    "credentialId": "CSHLD-2026-C4771384",
+    "hash": "086c80a5051748922dec616e6bf57f1f64d6fb7c67c634d9d1541e265e8c9674",
+    "issuerId": "51369770-0e4c-4713-9d4c-6396ddbfb080",
+    "metadataURI": "local://credentials/CSHLD-2026-C4771384",
+    "issuedAt": 1790311022424,
+    "expiresAt": null,
+    "status": "active",
+    "txHash": "0xDEMO086c80a5051748922dec616e6bf57f1f64d6fb7c67c634d9d1541e265e8c",
+    "anchoredAt": "2026-09-25T04:37:02.424Z"
+  }
+]

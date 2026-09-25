@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CredShield MVP</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div>
+        <p class="eyebrow">CredShield MVP</p>
+        <h1>Multi-layer anti-forgery credential network</h1>
+        <p class="subtitle">
+          Inspired by Indian currency-note security: visible trust, cryptographic trust,
+          and authority trust in one credential workflow.
+        </p>
+      </div>
+      <div class="hero-card">
+        <div class="hero-badge">Mock blockchain anchored</div>
+        <div class="metric"><strong id="issuerCount">0</strong><span>approved issuers</span></div>
+        <div class="metric"><strong id="credentialCount">0</strong><span>issued credentials</span></div>
+      </div>
+    </header>
+
+    <nav class="tabs">
+      <button data-view="overview" class="tab active">Overview</button>
+      <button data-view="admin" class="tab">Admin</button>
+      <button data-view="issue" class="tab">Issue</button>
+      <button data-view="verify" class="tab">Verify</button>
+    </nav>
+
+    <main>
+      <section id="view-overview" class="view active">
+        <div class="grid two">
+          <article class="card">
+            <h2>Trust model</h2>
+            <div class="trust-stack">
+              <div>
+                <h3>1. Visible trust</h3>
+                <p>Credential ID, QR code, issuer name, certificate PDF.</p>
+              </div>
+              <div>
+                <h3>2. Cryptographic trust</h3>
+                <p>SHA-256 hash, Ed25519 signature, chain anchor record.</p>
+              </div>
+              <div>
+                <h3>3. Authority trust</h3>
+                <p>Approved issuer registry, live status, revoke / expiry checks.</p>
+              </div>
+            </div>
+          </article>
+          <article class="card">
+            <h2>Demo flow</h2>
+            <ol class="steps">
+              <li>Approve an issuer.</li>
+              <li>Issue a certificate with QR + PDF.</li>
+              <li>Verify it live.</li>
+              <li>Edit the payload in the tamper tester and watch validation fail.</li>
+            </ol>
+          </article>
+        </div>
+
+        <div class="grid two">
+          <article class="card">
+            <div class="card-header">
+              <h2>Issuers</h2>
+            </div>
+            <div id="issuerList" class="list"></div>
+          </article>
+          <article class="card">
+            <div class="card-header">
+              <h2>Recent credentials</h2>
+            </div>
+            <div id="credentialList" class="list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="view-admin" class="view">
+        <article class="card">
+          <h2>Approve issuer</h2>
+          <form id="issuerForm" class="form-grid">
+            <label>
+              Institution name
+              <input name="name" placeholder="ABC University" required />
+            </label>
+            <label>
+              Issuer email
+              <input name="email" type="email" placeholder="registrar@abc.edu" required />
+            </label>
+            <label>
+              DID (optional)
+              <input name="did" placeholder="did:credshield:abc-university" />
+            </label>
+            <div class="form-actions">
+              <button type="submit" class="primary">Approve issuer</button>
+            </div>
+          </form>
+          <p id="issuerMessage" class="message"></p>
+        </article>
+      </section>
+
+      <section id="view-issue" class="view">
+        <article class="card">
+          <h2>Issue credential</h2>
+          <form id="credentialForm" class="form-grid two-columns">
+            <label>
+              Approved issuer
+              <select name="issuerId" id="issuerSelect" required></select>
+            </label>
+            <label>
+              Institution name override
+              <input name="institutionName" placeholder="Leave blank to use issuer name" />
+            </label>
+            <label>
+              Student name
+              <input name="studentName" placeholder="Arun Kumar" required />
+            </label>
+            <label>
+              Student email
+              <input name="studentEmail" type="email" placeholder="arun@example.com" required />
+            </label>
+            <label>
+              Student ID
+              <input name="studentId" placeholder="22CSE1042" required />
+            </label>
+            <label>
+              Credential type
+              <input name="credentialType" placeholder="Bachelor of Technology" required />
+            </label>
+            <label>
+              Program
+              <input name="program" placeholder="Computer Science and Engineering" required />
+            </label>
+            <label>
+              Grade / result
+              <input name="grade" placeholder="First Class with Distinction" required />
+            </label>
+            <label>
+              Issue date
+              <input name="issueDate" type="date" />
+            </label>
+            <label>
+              Expiry date (optional)
+              <input name="expiresAt" type="date" />
+            </label>
+            <div class="form-actions full-width">
+              <button type="submit" class="primary">Issue credential</button>
+            </div>
+          </form>
+          <p id="credentialMessage" class="message"></p>
+          <div id="issueResult"></div>
+        </article>
+      </section>
+
+      <section id="view-verify" class="view">
+        <article class="card">
+          <h2>Verify credential</h2>
+          <form id="verifyForm" class="inline-form">
+            <input id="verifyId" name="credentialId" placeholder="Enter credential ID" required />
+            <button type="submit" class="primary">Verify</button>
+          </form>
+          <p class="helper">Tip: after verification, edit the payload below to simulate tampering.</p>
+          <div id="verifyResult"></div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <h2>Tamper tester</h2>
+            <button id="verifyEditedBtn" class="secondary">Verify edited payload</button>
+          </div>
+          <textarea id="tamperPayload" rows="16" spellcheck="false"></textarea>
+        </article>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

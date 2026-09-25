@@ -1,0 +1,15 @@
+{
+  "name": "credshield-mvp",
+  "version": "1.0.0",
+  "description": "Currency-note-inspired multi-layer credential verification MVP",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "pdfkit": "^0.15.2",
+    "qrcode": "^1.5.4"
+  }
+}

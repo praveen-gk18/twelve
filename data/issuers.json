@@ -1,0 +1,12 @@
+[
+  {
+    "id": "51369770-0e4c-4713-9d4c-6396ddbfb080",
+    "name": "ABC University",
+    "email": "registrar@abcuniversity.edu",
+    "did": "did:credshield:abc-university",
+    "status": "approved",
+    "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAxuZpsAxi4g9EIEhsbxm1AtbWUfSsdQThs/1DPHcGuXk=\n-----END PUBLIC KEY-----\n",
+    "privateKey": "-----BEGIN PRIVATE KEY-----\nMC4CAQAwBQYDK2VwBCIEIO7T6mU0vOr6fTtiwVZjjYkPxX6u4fQLlr9W9O3alJiy\n-----END PRIVATE KEY-----\n",
+    "createdAt": "2026-09-25T04:37:02.422Z"
+  }
+]
