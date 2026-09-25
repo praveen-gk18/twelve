@@ -1,6 +1,6 @@
 # POCKET
 
-A **GitHub-ready prototype** for a verifiable digital certificate network inspired by **Indian currency-note anti-counterfeit design**.
+A **prototype** for a verifiable digital certificate network inspired by **Indian currency-note anti-counterfeit design**.
 
 ## Core concept
 
