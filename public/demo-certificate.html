@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CredShield — Certificate Generator</title>
+    <title>POCKET — Certificate Generator</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body class="vc-body">
@@ -11,9 +11,9 @@
       <header class="vc-appbar vc-no-print">
         <div class="vc-appbar-inner">
           <div class="vc-brand">
-            <div class="vc-brand-mark">CS</div>
+            <div class="vc-brand-mark">PK</div>
             <div>
-              <div class="vc-brand-name">CredShield</div>
+              <div class="vc-brand-name">POCKET</div>
               <div class="vc-brand-sub">Certificate preview generator</div>
             </div>
           </div>
@@ -22,6 +22,7 @@
             <a class="vc-tab" href="/issuer">Issuer Portal</a>
             <a class="vc-tab" href="/verify">Verifier Portal</a>
             <a class="vc-tab is-active" href="/demo-certificate">Certificate Generator</a>
+          <button class="vc-tab" type="button" data-theme-toggle>Dark mode</button>
           </nav>
         </div>
       </header>
@@ -68,7 +69,7 @@
               <label class="vc-field"><span class="vc-label">Credential type</span><input class="vc-input" name="credentialType" placeholder="Certificate of Completion" required /></label>
               <label class="vc-field"><span class="vc-label">Program / course</span><input class="vc-input" name="program" placeholder="Blockchain Fundamentals" required /></label>
               <label class="vc-field"><span class="vc-label">Grade / result</span><input class="vc-input" name="grade" placeholder="A+" required /></label>
-              <label class="vc-field"><span class="vc-label">Institution name (optional)</span><input class="vc-input" name="institutionName" placeholder="CredShield University" /></label>
+              <label class="vc-field"><span class="vc-label">Institution name (optional)</span><input class="vc-input" name="institutionName" placeholder="POCKET University" /></label>
               <label class="vc-field"><span class="vc-label">Issue date</span><input class="vc-input" name="issueDate" type="date" /></label>
               <label class="vc-field"><span class="vc-label">Expiry date (optional)</span><input class="vc-input" name="expiresAt" type="date" /></label>
               <div class="vc-form-actions"><button type="submit" class="vc-btn vc-btn-primary">Generate certificate</button></div>
@@ -92,6 +93,7 @@
         <section id="demoResult" class="vc-stack"></section>
       </main>
     </div>
+    <script src="/theme.js"></script>
     <script src="/demo-certificate.js"></script>
   </body>
 </html>

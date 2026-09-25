@@ -107,9 +107,9 @@ function getOrCreateApprovedDemoIssuer() {
   const keys = generateIssuerKeys();
   const demoIssuer = {
     id: randomUUID(),
-    name: 'CredShield Demo University',
-    email: 'demo-issuer@credshield.app',
-    did: 'did:credshield:demo-university',
+    name: 'POCKET Demo University',
+    email: 'demo-issuer@pocket.app',
+    did: 'did:pocket:demo-university',
     status: 'approved',
     publicKey: keys.publicKey,
     privateKey: keys.privateKey,
@@ -202,9 +202,9 @@ function issueDemoDataIfEmpty() {
   const keys = generateIssuerKeys();
   const demoIssuer = {
     id: randomUUID(),
-    name: 'ABC University',
-    email: 'registrar@abcuniversity.edu',
-    did: 'did:credshield:abc-university',
+    name: 'POCKET University',
+    email: 'registrar@pocketuniversity.edu',
+    did: 'did:pocket:pocket-university',
     status: 'approved',
     publicKey: keys.publicKey,
     privateKey: keys.privateKey,
@@ -261,7 +261,7 @@ function issueDemoDataIfEmpty() {
 issueDemoDataIfEmpty();
 
 app.get('/api/health', (req, res) => {
-  res.json({ ok: true, app: 'CredShield', mode: 'mock-chain', time: new Date().toISOString() });
+  res.json({ ok: true, app: 'POCKET', mode: 'mock-chain', time: new Date().toISOString() });
 });
 
 app.get('/api/issuers', (req, res) => {
@@ -288,7 +288,7 @@ app.post('/api/issuers/approve', (req, res) => {
     id: randomUUID(),
     name,
     email,
-    did: did || `did:credshield:${name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+    did: did || `did:pocket:${name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
     status: 'approved',
     publicKey: keys.publicKey,
     privateKey: keys.privateKey,
@@ -392,7 +392,7 @@ app.post('/api/demo/certificate', async (req, res) => {
 
     const issuer = getOrCreateApprovedDemoIssuer();
     const safeName = studentName.trim().toUpperCase().replace(/[^A-Z0-9]+/g, '').slice(0, 10) || 'DEMO';
-    const generatedEmail = studentEmail || `${safeName.toLowerCase()}@demo.credshield.app`;
+    const generatedEmail = studentEmail || `${safeName.toLowerCase()}@demo.pocket.app`;
     const generatedStudentId = `DEMO-${Date.now().toString().slice(-6)}`;
 
     const credential = await createCredentialRecord({
@@ -530,5 +530,5 @@ app.get('*', (req, res) => {
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`CredShield MVP running at http://0.0.0.0:${PORT}`);
+  console.log(`POCKET running at http://0.0.0.0:${PORT}`);
 });

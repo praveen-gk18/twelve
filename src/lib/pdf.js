@@ -16,7 +16,7 @@ function buildCertificatePdf({ filePath, credential, issuer, qrDataUrl }) {
     doc.roundedRect(35, 35, 525, 772, 18).lineWidth(2).stroke('#1d4ed8');
     doc.roundedRect(50, 50, 495, 742, 12).lineWidth(1).stroke('#93c5fd');
 
-    doc.font('Helvetica-Bold').fontSize(14).fillColor('#1d4ed8').text('CredShield', { align: 'center' });
+    doc.font('Helvetica-Bold').fontSize(14).fillColor('#1d4ed8').text('POCKET', { align: 'center' });
     doc.moveDown(0.2);
     doc.fontSize(24).fillColor('#0f172a').text('Verifiable Digital Credential', { align: 'center' });
     doc.moveDown(0.3);

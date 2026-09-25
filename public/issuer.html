@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CredShield — Issuer Portal</title>
+    <title>POCKET — Issuer Portal</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body class="vc-body">
@@ -11,9 +11,9 @@
       <header class="vc-appbar vc-no-print">
         <div class="vc-appbar-inner">
           <div class="vc-brand">
-            <div class="vc-brand-mark">CS</div>
+            <div class="vc-brand-mark">PK</div>
             <div>
-              <div class="vc-brand-name">CredShield</div>
+              <div class="vc-brand-name">POCKET</div>
               <div class="vc-brand-sub">Issuer-side credential administration</div>
             </div>
           </div>
@@ -22,6 +22,7 @@
             <a class="vc-tab is-active" href="/issuer">Issuer Portal</a>
             <a class="vc-tab" href="/verify">Verifier Portal</a>
             <a class="vc-tab" href="/demo-certificate">Certificate Generator</a>
+          <button class="vc-tab" type="button" data-theme-toggle>Dark mode</button>
           </nav>
         </div>
       </header>
@@ -63,9 +64,9 @@
               <p class="vc-section-sub">Register a university, training institute, or certification body into the approved issuer directory.</p>
             </div>
             <form id="issuerForm" class="vc-form-grid">
-              <label class="vc-field"><span class="vc-label">Institution name</span><input class="vc-input" name="name" placeholder="ABC University" required /></label>
+              <label class="vc-field"><span class="vc-label">Institution name</span><input class="vc-input" name="name" placeholder="POCKET University" required /></label>
               <label class="vc-field"><span class="vc-label">Issuer email</span><input class="vc-input" name="email" type="email" placeholder="registrar@abc.edu" required /></label>
-              <label class="vc-field" style="grid-column:1 / -1;"><span class="vc-label">DID (optional)</span><input class="vc-input" name="did" placeholder="did:credshield:abc-university" /></label>
+              <label class="vc-field" style="grid-column:1 / -1;"><span class="vc-label">DID (optional)</span><input class="vc-input" name="did" placeholder="did:pocket:abc-university" /></label>
               <div class="vc-form-actions"><button type="submit" class="vc-btn vc-btn-primary">Approve issuer</button></div>
             </form>
             <p id="issuerMessage" class="vc-section-sub" style="margin-top:0.75rem;"></p>
@@ -114,6 +115,7 @@
         </section>
       </main>
     </div>
+    <script src="/theme.js"></script>
     <script src="/issuer.js"></script>
   </body>
 </html>

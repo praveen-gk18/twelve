@@ -1,17 +1,17 @@
-# CredShield
+# POCKET
 
 A **GitHub-ready prototype** for a verifiable digital certificate network inspired by **Indian currency-note anti-counterfeit design**.
 
 ## Core concept
 
-CredShield is split into **two dedicated portals**:
+POCKET is split into **two dedicated portals**:
 
 1. **Issuer Portal** — for institutions to approve issuers, issue credentials, generate QR codes and PDFs, anchor proof records, and revoke credentials.
 2. **Verifier Portal** — for employers, universities, and HR teams to instantly verify a credential using its ID or QR link.
 
 ## What makes this different
 
-Instead of just saying “we put certificates on blockchain,” CredShield uses a **3-layer trust model**:
+Instead of just saying “we put certificates on blockchain,” POCKET uses a **3-layer trust model**:
 
 1. **Visible trust** — QR code, credential ID, institution details, PDF certificate
 2. **Cryptographic trust** — SHA-256 hash, Ed25519 issuer signature, blockchain anchor record
@@ -48,7 +48,7 @@ Instead of just saying “we put certificates on blockchain,” CredShield uses 
 ## Repo structure
 
 ```text
-credshield/
+pocket/
 ├── contracts/               # Solidity + Hardhat
 ├── data/                    # Local JSON data for mock mode
 ├── public/                  # Frontend pages + generated files
@@ -118,7 +118,7 @@ The real EVM smart contracts are included in `/contracts` for deployment to Poly
 If you want to publish this repo to your GitHub account:
 
 ```bash
-git remote add origin https://github.com/YOUR-USERNAME/credshield.git
+git remote add origin https://github.com/YOUR-USERNAME/pocket.git
 git branch -M main
 git push -u origin main
 ```

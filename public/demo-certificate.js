@@ -78,7 +78,7 @@ function renderDemoResult(data) {
                 <p class="vc-cert-role">Authorized issuer</p>
               </div>
               <div style="text-align:right;">
-                <div class="vc-cert-signature">CredShield Registry</div>
+                <div class="vc-cert-signature">POCKET Registry</div>
                 <div class="vc-cert-rule"></div>
                 <p class="vc-cert-role">Verification record</p>
               </div>
