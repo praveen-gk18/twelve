@@ -39,7 +39,7 @@ function renderDemoResult(data) {
                 <h3 class="vc-cert-institution">${escapeHtml(credential.payload.institutionName)}</h3>
                 <p class="vc-cert-tagline">Verified digital credential</p>
               </div>
-              <img class="vc-seal" src="/pocket-logo.png" width="72" height="72" alt="POCKET logo" />
+              <img class="vc-seal" src="/pocket-logo-concept.png" width="72" height="72" alt="POCKET logo" />
             </div>
 
             <div class="vc-cert-body">
