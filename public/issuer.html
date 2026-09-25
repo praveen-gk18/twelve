@@ -4,6 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>POCKET — Issuer Portal</title>
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem('pocket-theme') || 'dark';
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body class="vc-body">
@@ -22,7 +32,7 @@
             <a class="vc-tab is-active" href="/issuer">Issuer Portal</a>
             <a class="vc-tab" href="/verify">Verifier Portal</a>
             <a class="vc-tab" href="/demo-certificate">Certificate Generator</a>
-          <button class="vc-tab" type="button" data-theme-toggle>Dark mode</button>
+          <button class="vc-tab vc-theme-toggle" type="button" data-theme-toggle aria-label="Toggle color theme"></button>
           </nav>
         </div>
       </header>
