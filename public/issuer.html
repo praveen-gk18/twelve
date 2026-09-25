@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CredShield — Issuer Portal</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="hero portal-hero">
+      <div>
+        <p class="eyebrow">Issuer Portal</p>
+        <h1>Issue tamper-evident credentials from approved institutions</h1>
+        <p class="subtitle">
+          This portal is for universities, training institutes, and certifying bodies. It handles issuer approval,
+          credential creation, QR generation, PDF export, mock-chain anchoring, and revocation.
+        </p>
+        <div class="cta-row">
+          <a class="secondary link-button" href="/">Home</a>
+          <a class="primary link-button" href="/verify">Open verifier portal</a>
+        </div>
+      </div>
+      <div class="hero-card compact-card">
+        <div class="hero-badge">Institution workflow</div>
+        <div class="metric"><strong id="issuerCount">0</strong><span>approved issuers</span></div>
+        <div class="metric"><strong id="credentialCount">0</strong><span>credentials issued</span></div>
+      </div>
+    </header>
+
+    <main>
+      <section class="grid two">
+        <article class="card">
+          <h2>1. Approve issuer</h2>
+          <p class="helper">Demo admin step to add an institution into the trusted issuer registry.</p>
+          <form id="issuerForm" class="form-grid">
+            <label>
+              Institution name
+              <input name="name" placeholder="ABC University" required />
+            </label>
+            <label>
+              Issuer email
+              <input name="email" type="email" placeholder="registrar@abc.edu" required />
+            </label>
+            <label>
+              DID (optional)
+              <input name="did" placeholder="did:credshield:abc-university" />
+            </label>
+            <div class="form-actions">
+              <button type="submit" class="primary">Approve issuer</button>
+            </div>
+          </form>
+          <p id="issuerMessage" class="message"></p>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <h2>Approved issuers</h2>
+          </div>
+          <div id="issuerList" class="list"></div>
+        </article>
+      </section>
+
+      <section class="card">
+        <h2>2. Issue credential</h2>
+        <p class="helper">Creates the credential payload, signs it, anchors the hash, and generates a QR-linked PDF.</p>
+        <form id="credentialForm" class="form-grid two-columns">
+          <label>
+            Approved issuer
+            <select name="issuerId" id="issuerSelect" required></select>
+          </label>
+          <label>
+            Institution name override
+            <input name="institutionName" placeholder="Leave blank to use issuer name" />
+          </label>
+          <label>
+            Student name
+            <input name="studentName" placeholder="Arun Kumar" required />
+          </label>
+          <label>
+            Student email
+            <input name="studentEmail" type="email" placeholder="arun@example.com" required />
+          </label>
+          <label>
+            Student ID
+            <input name="studentId" placeholder="22CSE1042" required />
+          </label>
+          <label>
+            Credential type
+            <input name="credentialType" placeholder="Bachelor of Technology" required />
+          </label>
+          <label>
+            Program
+            <input name="program" placeholder="Computer Science and Engineering" required />
+          </label>
+          <label>
+            Grade / result
+            <input name="grade" placeholder="First Class with Distinction" required />
+          </label>
+          <label>
+            Issue date
+            <input name="issueDate" type="date" />
+          </label>
+          <label>
+            Expiry date (optional)
+            <input name="expiresAt" type="date" />
+          </label>
+          <div class="form-actions full-width">
+            <button type="submit" class="primary">Issue credential</button>
+          </div>
+        </form>
+        <p id="credentialMessage" class="message"></p>
+        <div id="issueResult"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <h2>3. Issued credentials</h2>
+          <a class="secondary link-button" href="/verify">Test them in verifier portal</a>
+        </div>
+        <div id="credentialList" class="list"></div>
+      </section>
+    </main>
+
+    <script src="/issuer.js"></script>
+  </body>
+</html>

@@ -2,9 +2,16 @@
 
 A **GitHub-ready hackathon prototype** for a verifiable digital certificate network inspired by **Indian currency-note anti-counterfeit design**.
 
+## Core concept
+
+CredShield is split into **two dedicated portals**:
+
+1. **Issuer Portal** — for institutions to approve issuers, issue credentials, generate QR codes and PDFs, anchor proof records, and revoke credentials.
+2. **Verifier Portal** — for employers, universities, and HR teams to instantly verify a credential using its ID or QR link.
+
 ## What makes this different
 
-Instead of saying “we put certificates on blockchain,” CredShield uses a **3-layer trust model**:
+Instead of just saying “we put certificates on blockchain,” CredShield uses a **3-layer trust model**:
 
 1. **Visible trust** — QR code, credential ID, institution details, PDF certificate
 2. **Cryptographic trust** — SHA-256 hash, Ed25519 issuer signature, blockchain anchor record
@@ -12,19 +19,26 @@ Instead of saying “we put certificates on blockchain,” CredShield uses a **3
 
 ## What is included in this repo
 
-### Working MVP app
-- Admin can approve or suspend issuers
-- Issuer can issue credentials
-- System generates:
+### Issuer Portal
+- Approve or suspend issuers
+- Issue a credential for a student or professional
+- Generate:
   - credential hash
   - digital signature
   - mock blockchain anchor transaction
   - QR code
   - PDF certificate
-- Verifier can:
-  - check live status
-  - see trust score out of 4
-  - simulate tampering by editing the credential payload
+- Revoke credentials
+
+### Verifier Portal
+- Verify a credential instantly
+- Show trust score out of 4
+- Check:
+  - issuer approval
+  - hash match
+  - signature validity
+  - active/revoked/expired state
+- Simulate tampering by editing the credential payload
 
 ### Solidity contracts
 - `contracts/InstitutionRegistry.sol`
@@ -37,7 +51,13 @@ Instead of saying “we put certificates on blockchain,” CredShield uses a **3
 credshield/
 ├── contracts/               # Solidity + Hardhat
 ├── data/                    # Local JSON data for mock mode
-├── public/                  # Frontend + generated files
+├── public/                  # Frontend pages + generated files
+│   ├── index.html           # Home page
+│   ├── issuer.html          # Issuer portal
+│   ├── verify.html          # Verifier portal
+│   ├── issuer.js
+│   ├── verify.js
+│   └── styles.css
 ├── src/lib/                 # Crypto, storage, PDF, mock-chain helpers
 ├── server.js                # Express API + static app server
 ├── package.json
@@ -53,13 +73,16 @@ npm start
 
 Open:
 
-- `http://localhost:3000` locally
-- or the live preview URL when run in a cloud sandbox
+- `http://localhost:3000/` — home
+- `http://localhost:3000/issuer` — issuer portal
+- `http://localhost:3000/verify` — verifier portal
+
+Or use the live preview URL when running in a cloud sandbox.
 
 ## Default demo data
 
-The app seeds one sample approved issuer if the data folder is empty:
-- **ABC University**
+If the data folder is empty, the app seeds:
+- **ABC University** as an approved issuer
 - one sample credential for **Arun Kumar**
 
 ## API summary
@@ -75,18 +98,18 @@ The app seeds one sample approved issuer if the data folder is empty:
 
 ## Demo flow for judges
 
-1. Open the app
-2. Show trust model
-3. Approve an issuer or use seeded `ABC University`
-4. Issue a new credential
-5. Open PDF + QR
-6. Verify the credential and show `Trust score: 4/4`
-7. Edit the grade in the tamper tester
-8. Re-run verify and show `TAMPERED`
+1. Open `/issuer`
+2. Approve an issuer or use seeded `ABC University`
+3. Issue a new credential
+4. Open the generated PDF and QR
+5. Move to `/verify` or click the verify link
+6. Show `Trust score: 4/4`
+7. Edit the grade or program in the tamper tester
+8. Re-run verification and show `TAMPERED`
 
 ## Mock-chain vs real chain
 
-The running MVP uses a local **mock blockchain anchor** so the demo works instantly.
+The running MVP uses a local **mock blockchain anchor** so the demo works instantly without wallet setup.
 
 The real EVM smart contracts are included in `/contracts` for deployment to Polygon Amoy or any EVM network.
 
@@ -95,9 +118,6 @@ The real EVM smart contracts are included in `/contracts` for deployment to Poly
 If you want to publish this repo to your GitHub account:
 
 ```bash
-git init
-git add .
-git commit -m "Initial CredShield MVP"
 git remote add origin https://github.com/YOUR-USERNAME/credshield.git
 git branch -M main
 git push -u origin main
@@ -110,4 +130,5 @@ git push -u origin main
 - Add CSV bulk issuance
 - Add IPFS metadata storage
 - Add DID / Verifiable Credentials compliance
+- Add camera-based QR scanning
 - Add downloadable verification report

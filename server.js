@@ -41,7 +41,7 @@ function saveCredentials(credentials) {
 }
 
 function buildVerifyUrl(req, credentialId) {
-  return `${req.protocol}://${req.get('host')}/?view=verify&id=${encodeURIComponent(credentialId)}`;
+  return `${req.protocol}://${req.get('host')}/verify?id=${encodeURIComponent(credentialId)}`;
 }
 
 function buildCredentialId(prefix = 'CSHLD') {
@@ -154,7 +154,7 @@ function issueDemoDataIfEmpty() {
       status: 'active',
       issuedAt: new Date().toISOString(),
       anchor,
-      verifyUrl: '',
+      verifyUrl: `/verify?id=${encodeURIComponent(payload.credentialId)}`,
       qrPath: '',
       pdfPath: '',
       issuerSnapshot: sanitizeIssuer(demoIssuer),
@@ -222,7 +222,7 @@ app.get('/api/credentials', (req, res) => {
     payload: credential.payload,
     status: credential.status,
     issuedAt: credential.issuedAt,
-    verifyUrl: credential.verifyUrl,
+    verifyUrl: credential.verifyUrl || `/verify?id=${encodeURIComponent(credential.id)}`,
     qrPath: credential.qrPath,
     pdfPath: credential.pdfPath,
     anchor: credential.anchor,
@@ -408,6 +408,18 @@ app.post('/api/verify', (req, res) => {
     issuer: sanitizeIssuer(issuer),
     canonicalCredential: credential,
   });
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(publicDir, 'index.html'));
+});
+
+app.get('/issuer', (req, res) => {
+  res.sendFile(path.join(publicDir, 'issuer.html'));
+});
+
+app.get('/verify', (req, res) => {
+  res.sendFile(path.join(publicDir, 'verify.html'));
 });
 
 app.get('*', (req, res) => {
