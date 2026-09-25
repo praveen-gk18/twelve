@@ -123,6 +123,35 @@ git branch -M main
 git push -u origin main
 ```
 
+If your local branch is still `master`, this command renames it to `main` before the first push.
+
+## Deploy on Render
+
+This repo now includes:
+- `render.yaml`
+- `.nvmrc`
+- Node engine in `package.json`
+
+### Render steps
+1. Push this repo to GitHub.
+2. Sign in to Render.
+3. Click **New +** → **Blueprint** or **Web Service**.
+4. Connect your GitHub repo.
+5. Render should detect:
+   - **Build Command:** `npm install`
+   - **Start Command:** `npm start`
+6. Deploy.
+7. Use `/api/health` as the health check path if Render asks.
+
+### Important deployment note
+This MVP uses local JSON files under `data/` and generated QR/PDF files under `public/generated/`.
+That is perfect for a **demo**, but on a cloud restart or redeploy, data may reset unless you add persistent storage or a real database/object store.
+
+For a more durable deployment later, replace local storage with:
+- PostgreSQL / MongoDB for records
+- S3 / Cloudinary / object storage for generated files
+- real blockchain contract calls for the anchor layer
+
 ## Suggested next upgrades
 
 - Replace mock-chain storage with live contract calls
